@@ -1,0 +1,12 @@
+com\entidades\PruebaLaboratorioEntidad.class
+com\entidades\ResultadoEntidad.class
+com\persistenciaclinicabda\conexion\IConexionBD.class
+com\entidades\MuestraEntidad.class
+com\entidades\ServicioAnalisisEntidad.class
+com\entidades\ClienteEntidad.class
+com\persistenciaclinicabda\ClienteDAO.class
+com\persistenciaclinicabda\conexion\ConexionBD.class
+com\entidades\ParametroEntidad.class
+com\persistenciaclinicabda\PersistenciaClinicaBDA.class
+com\entidades\DoctorEntidad.class
+com\entidades\RangoEntidad.class
