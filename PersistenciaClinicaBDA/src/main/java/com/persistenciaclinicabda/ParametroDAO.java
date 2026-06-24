@@ -5,57 +5,47 @@
 package com.persistenciaclinicabda;
 import com.entidades.ParametroEntidad;
 import com.entidades.ServicioAnalisisEntidad;
-import com.persistenciaclinicabda.conexion.ConexionBD;
-import com.persistenciaclinicabda.conexion.IConexionBD;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 /**
  *
  * @author oscar
  */
 public class ParametroDAO {
-    
-    private IConexionBD conexion;
+
+    private EntityManagerFactory emf;
 
     public ParametroDAO() {
-        this.conexion = new ConexionBD();
+        this.emf = Persistence.createEntityManagerFactory("ClinicaPU");
     }
 
-    public void guardarParametro(ParametroEntidad parametro) throws SQLException {
-        String sql = "INSERT INTO parametros (nombre, orden_aparicion, descripcion, unidad_medida, id_analisis) VALUES (?, ?, ?, ?, ?)";
-        
-        try (Connection conn = conexion.crearConexion();
-             PreparedStatement comando = conn.prepareStatement(sql)) {
+    public void guardarParametro(ParametroEntidad parametro, int idAnalisis) throws Exception {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
             
-            comando.setString(1, parametro.getNombre());
-            comando.setInt(2, parametro.getOrdenAparicion());
-            comando.setString(3, parametro.getDescripcion());
-            comando.setString(4, parametro.getUnidadMedida());
-            comando.setInt(5, parametro.getIdAnalisis());
+            ServicioAnalisisEntidad analisisRef = em.getReference(ServicioAnalisisEntidad.class, idAnalisis);
             
-            comando.executeUpdate();
-        }
-    }
-
-    public List<ServicioAnalisisEntidad> obtenerTodosLosAnalisis() throws SQLException {
-        List<ServicioAnalisisEntidad> lista = new ArrayList<>();
-        String sql = "SELECT * FROM analisis"; 
-        
-        try (Connection conn = conexion.crearConexion();
-             PreparedStatement comando = conn.prepareStatement(sql);
-             ResultSet rs = comando.executeQuery()) {
+            parametro.setAnalisis(analisisRef);
             
-            while (rs.next()) {
-                ServicioAnalisisEntidad analisis = new ServicioAnalisisEntidad();
-                analisis.setIdAnalisis(rs.getInt(1));
-                analisis.setNombre(rs.getString(2));
-                lista.add(analisis);
+            em.persist(parametro);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
+            throw e;
+        } finally {
+            em.close();
         }
-        return lista;
+    }
+    public java.util.List<com.entidades.ParametroEntidad> obtenerTodosLosParametros() throws Exception {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createQuery("SELECT p FROM ParametroEntidad p", com.entidades.ParametroEntidad.class).getResultList();
+        } finally {
+            em.close();
+        }
     }
 }

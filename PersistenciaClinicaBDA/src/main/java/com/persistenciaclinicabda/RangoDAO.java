@@ -5,58 +5,38 @@
 package com.persistenciaclinicabda;
 import com.entidades.ParametroEntidad;
 import com.entidades.RangoEntidad;
-import com.persistenciaclinicabda.conexion.ConexionBD;
-import com.persistenciaclinicabda.conexion.IConexionBD;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 /**
  *
  * @author oscar
  */
 public class RangoDAO {
-    
-    private IConexionBD conexion;
+
+    private EntityManagerFactory emf;
 
     public RangoDAO() {
-        this.conexion = new ConexionBD();
+        this.emf = Persistence.createEntityManagerFactory("ClinicaPU");
     }
 
-    public void guardarRango(RangoEntidad rango) throws SQLException {
-        String sql = "INSERT INTO rangos_evaluacion (sexo_aplica, edad_inicial, edad_final, rango_inicial, rango_final, id_parametro) VALUES (?, ?, ?, ?, ?, ?)";
-        
-        try (Connection conn = conexion.crearConexion();
-             PreparedStatement comando = conn.prepareStatement(sql)) {
+    public void guardarRango(RangoEntidad rango, int idParametro) throws Exception {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
             
-            comando.setString(1, rango.getSexoAplica());
-            comando.setInt(2, rango.getEdadInicial());
-            comando.setInt(3, rango.getEdadFinal());
-            comando.setDouble(4, rango.getRangoInicial());
-            comando.setDouble(5, rango.getRangoFinal());
-            comando.setInt(6, rango.getIdParametro());
+            ParametroEntidad parametroRef = em.getReference(ParametroEntidad.class, idParametro);
+            rango.setParametro(parametroRef);
             
-            comando.executeUpdate();
-        }
-    }
-
-    public List<ParametroEntidad> obtenerTodosLosParametros() throws SQLException {
-        List<ParametroEntidad> lista = new ArrayList<>();
-        String sql = "SELECT * FROM parametros";
-        
-        try (Connection conn = conexion.crearConexion();
-             PreparedStatement comando = conn.prepareStatement(sql);
-             ResultSet rs = comando.executeQuery()) {
-            
-            while (rs.next()) {
-                ParametroEntidad parametro = new ParametroEntidad();
-                parametro.setIdParametro(rs.getInt(1));
-                parametro.setNombre(rs.getString(2));
-                lista.add(parametro);
+            em.persist(rango);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
+            throw e;
+        } finally {
+            em.close();
         }
-        return lista;
     }
 }

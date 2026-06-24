@@ -4,48 +4,45 @@
  */
 package com.persistenciaclinicabda;
 import com.entidades.MuestraEntidad;
-import com.persistenciaclinicabda.conexion.ConexionBD;
-import com.persistenciaclinicabda.conexion.IConexionBD;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import java.util.List;
 /**
  *
  * @author oscar
  */
 public class MuestraDAO {
     
-    private IConexionBD conexion;
+    private EntityManagerFactory emf;
 
     public MuestraDAO() {
-        this.conexion = new ConexionBD();
+        this.emf = Persistence.createEntityManagerFactory("ClinicaPU");
     }
 
-    public void guardarMuestra(MuestraEntidad muestra) throws SQLException {
-        String sql = "INSERT INTO tipos_muestra (nombre) VALUES (?)";
-        
-        try (Connection conn = conexion.crearConexion();
-             PreparedStatement comando = conn.prepareStatement(sql)) {
-            
-            comando.setString(1, muestra.getNombre());
-            comando.executeUpdate();
+    public void guardarMuestra(MuestraEntidad muestra) throws Exception {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(muestra);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            em.close();
         }
     }
-    public java.util.List<MuestraEntidad> obtenerTodasLasMuestras() throws SQLException {
-        java.util.List<MuestraEntidad> lista = new java.util.ArrayList<>();
-        String sql = "SELECT * FROM tipos_muestra"; 
-        
-        try (Connection conn = conexion.crearConexion();
-             PreparedStatement comando = conn.prepareStatement(sql);
-             java.sql.ResultSet rs = comando.executeQuery()) {
-            
-            while (rs.next()) {
-                MuestraEntidad muestra = new MuestraEntidad();
-                muestra.setIdMuestra(rs.getInt(1)); 
-                muestra.setNombre(rs.getString(2)); 
-                lista.add(muestra);
-            }
+
+    public List<MuestraEntidad> obtenerTodasLasMuestras() throws Exception {
+        EntityManager em = emf.createEntityManager();
+        try {
+            String jpql = "SELECT m FROM MuestraEntidad m";
+            return em.createQuery(jpql, MuestraEntidad.class).getResultList();
+        } finally {
+            em.close();
         }
-        return lista;
     }
 }

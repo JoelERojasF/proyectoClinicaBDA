@@ -3,28 +3,45 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.entidades;
-
+import jakarta.persistence.*;
 /**
  *
  * @author Oscar
  */
+@Entity
+@Table(name = "parametros")
 public class ParametroEntidad {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_parametro")
     private int idParametro;
+
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
+
+    @Column(name = "orden_aparicion", nullable = false)
     private int ordenAparicion;
+
+    @Column(name = "descripcion", columnDefinition = "TEXT")
     private String descripcion;
+
+    @Column(name = "unidad_medida", nullable = false, length = 50)
     private String unidadMedida;
-    private int idAnalisis; 
+
+    @ManyToOne
+    @JoinColumn(name = "id_analisis", nullable = false)
+    private ServicioAnalisisEntidad analisis;
 
     public ParametroEntidad() {
     }
 
-    public ParametroEntidad(String nombre, int ordenAparicion, String descripcion, String unidadMedida, int idAnalisis) {
+
+    public ParametroEntidad(String nombre, int ordenAparicion, String descripcion, String unidadMedida) {
         this.nombre = nombre;
         this.ordenAparicion = ordenAparicion;
         this.descripcion = descripcion;
         this.unidadMedida = unidadMedida;
-        this.idAnalisis = idAnalisis;
     }
 
     public int getIdParametro() {
@@ -67,13 +84,11 @@ public class ParametroEntidad {
         this.unidadMedida = unidadMedida;
     }
 
-    public int getIdAnalisis() {
-        return idAnalisis;
+    public ServicioAnalisisEntidad getAnalisis() {
+        return analisis;
     }
 
-    public void setIdAnalisis(int idAnalisis) {
-        this.idAnalisis = idAnalisis;
+    public void setAnalisis(ServicioAnalisisEntidad analisis) {
+        this.analisis = analisis;
     }
-
-    
 }

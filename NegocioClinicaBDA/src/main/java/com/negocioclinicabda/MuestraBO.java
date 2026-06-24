@@ -18,9 +18,8 @@ public class MuestraBO {
     }
 
     public boolean registrarMuestra(String nombre) {
-        
         if (nombre == null || nombre.trim().isEmpty()) {
-            System.out.println("Error: El nombre de la muestra no puede estar vacío.");
+            System.out.println("Error: El nombre de la muestra es obligatorio.");
             return false;
         }
 
@@ -28,19 +27,19 @@ public class MuestraBO {
 
         try {
             muestraDAO.guardarMuestra(muestra);
-            System.out.println("Éxito: Tipo de muestra guardado en BD.");
+            System.out.println("Éxito: Muestra registrada en BD con JPA.");
             return true;
         } catch (Exception e) {
-            System.out.println("Error interno en BD al guardar muestra: " + e.getMessage());
+            System.out.println("Error en BD al guardar muestra: " + e.getMessage());
             return false;
         }
     }
-    public java.util.List<MuestraEntidad> obtenerListaMuestras() {
+    public java.util.List<com.entidades.MuestraEntidad> obtenerListaMuestras() {
         try {
             return muestraDAO.obtenerTodasLasMuestras();
         } catch (Exception e) {
-            System.out.println("Error al cargar muestras desde BD: " + e.getMessage());
-            return new java.util.ArrayList<>();
+            System.out.println("Error al consultar muestras: " + e.getMessage());
+            return java.util.Collections.emptyList();
         }
     }
 }

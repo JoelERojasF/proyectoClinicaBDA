@@ -14,7 +14,7 @@ public class PresentacionClinicaBDA {
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmRegistrarDoctor().setVisible(true);
+                new FrmRegistrarCliente().setVisible(true);
             }
         });
     }

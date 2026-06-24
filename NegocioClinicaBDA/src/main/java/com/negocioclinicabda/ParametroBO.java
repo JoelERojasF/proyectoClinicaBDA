@@ -4,10 +4,7 @@
  */
 package com.negocioclinicabda;
 import com.entidades.ParametroEntidad;
-import com.entidades.ServicioAnalisisEntidad;
 import com.persistenciaclinicabda.ParametroDAO;
-import java.util.ArrayList;
-import java.util.List;
 /**
  *
  * @author oscar
@@ -26,27 +23,32 @@ public class ParametroBO {
             System.out.println("Error: El nombre del parámetro es obligatorio.");
             return false;
         }
+        if (unidadMedida == null || unidadMedida.trim().isEmpty()) {
+            System.out.println("Error: La unidad de medida es obligatoria.");
+            return false;
+        }
         if (idAnalisis <= 0) {
             System.out.println("Error: Debe seleccionar un análisis válido.");
             return false;
         }
-
-        ParametroEntidad parametro = new ParametroEntidad(nombre, ordenAparicion, descripcion, unidadMedida, idAnalisis);
+        
+        ParametroEntidad parametro = new ParametroEntidad(nombre, ordenAparicion, descripcion, unidadMedida);
 
         try {
-            parametroDAO.guardarParametro(parametro);
+            parametroDAO.guardarParametro(parametro, idAnalisis);
+            System.out.println("Éxito: Parámetro guardado correctamente con JPA.");
             return true;
         } catch (Exception e) {
-            System.out.println("Error al guardar parámetro: " + e.getMessage());
+            System.out.println("Error en BD al guardar parámetro con JPA: " + e.getMessage());
             return false;
         }
     }
-
-    public List<ServicioAnalisisEntidad> obtenerListaAnalisis() {
+    public java.util.List<com.entidades.ServicioAnalisisEntidad> obtenerListaAnalisis() {
         try {
-            return parametroDAO.obtenerTodosLosAnalisis();
+            return new com.persistenciaclinicabda.ServicioAnalisisDAO().obtenerTodosLosAnalisis();
         } catch (Exception e) {
-            return new ArrayList<>();
+            System.out.println("Error al consultar análisis: " + e.getMessage());
+            return java.util.Collections.emptyList();
         }
     }
 }

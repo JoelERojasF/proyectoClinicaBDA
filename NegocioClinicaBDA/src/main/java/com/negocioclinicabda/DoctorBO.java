@@ -32,10 +32,10 @@ public class DoctorBO {
 
         try {
             doctorDAO.guardarDoctor(doctor);
-            System.out.println("Éxito: Médico registrado en la BD.");
+            System.out.println("Éxito: Médico registrado en la BD con JPA.");
             return true;
         } catch (Exception e) {
-            System.out.println("Error en BD al guardar médico: " + e.getMessage());
+            System.out.println("Error en BD al guardar médico con JPA: " + e.getMessage());
             return false;
         }
     }

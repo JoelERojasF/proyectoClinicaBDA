@@ -4,22 +4,36 @@
  */
 package com.entidades;
 
+import jakarta.persistence.*;
+
 /**
  *
  * @author le0jx
  */
+@Entity
+@Table(name = "analisis")
 public class ServicioAnalisisEntidad {
+@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_analisis")
     private int idAnalisis;
+
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
+
+    @Column(name = "descripcion", length = 255)
     private String descripcion;
-    private int idMuestra; 
-    public ServicioAnalisisEntidad() {
+
+    @ManyToOne
+    @JoinColumn(name = "id_muestra", nullable = false)
+    private MuestraEntidad muestra;
+    
+public ServicioAnalisisEntidad() {
     }
 
-    public ServicioAnalisisEntidad(String nombre, String descripcion, int idMuestra) {
+    public ServicioAnalisisEntidad(String nombre, String descripcion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.idMuestra = idMuestra;
     }
 
     public int getIdAnalisis() {
@@ -46,13 +60,11 @@ public class ServicioAnalisisEntidad {
         this.descripcion = descripcion;
     }
 
-    public int getIdMuestra() {
-        return idMuestra;
+    public MuestraEntidad getMuestra() {
+        return muestra;
     }
 
-    public void setIdMuestra(int idMuestra) {
-        this.idMuestra = idMuestra;
+    public void setMuestra(MuestraEntidad muestra) {
+        this.muestra = muestra;
     }
-
-    
 }

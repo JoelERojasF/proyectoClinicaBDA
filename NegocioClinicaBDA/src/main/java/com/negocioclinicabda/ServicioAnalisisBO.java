@@ -28,14 +28,14 @@ public class ServicioAnalisisBO {
             return false;
         }
 
-        ServicioAnalisisEntidad analisis = new ServicioAnalisisEntidad(nombre, descripcion, idMuestra);
+        ServicioAnalisisEntidad analisis = new ServicioAnalisisEntidad(nombre, descripcion);
 
         try {
-            analisisDAO.guardarAnalisis(analisis);
-            System.out.println("Éxito: Análisis guardado correctamente en la BD.");
+            analisisDAO.guardarAnalisis(analisis, idMuestra);
+            System.out.println("Éxito: Análisis guardado correctamente con JPA.");
             return true;
         } catch (Exception e) {
-            System.out.println("Error en la BD al guardar el análisis: " + e.getMessage());
+            System.out.println("Error en BD al guardar análisis con JPA: " + e.getMessage());
             return false;
         }
     }

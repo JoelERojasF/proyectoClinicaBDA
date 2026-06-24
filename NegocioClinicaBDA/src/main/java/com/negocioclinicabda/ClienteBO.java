@@ -20,12 +20,8 @@ public class ClienteBO {
 
     public boolean registrarCliente(String nombres, String apellidoPaterno, String apellidoMaterno, Date fechaNacimiento, String sexo, String tipoSangre) {
         
-        if (nombres == null || nombres.trim().isEmpty()) {
-            System.out.println("Error: El nombre es obligatorio.");
-            return false;
-        }
-        if (apellidoPaterno == null || apellidoPaterno.trim().isEmpty()) {
-            System.out.println("Error: El apellido paterno es obligatorio.");
+        if (nombres == null || nombres.trim().isEmpty() || apellidoPaterno == null || apellidoPaterno.trim().isEmpty()) {
+            System.out.println("Error: Nombre y apellido paterno son obligatorios.");
             return false;
         }
 
@@ -33,10 +29,10 @@ public class ClienteBO {
 
         try {
             clienteDAO.guardarCliente(cliente);
-            System.out.println("Éxito: ¡Cliente guardado correctamente en la base de datos!");
+            System.out.println("Éxito: Cliente registrado en la BD con JPA.");
             return true;
         } catch (Exception e) {
-            System.out.println("Error interno al guardar en BD: " + e.getMessage());
+            System.out.println("Error en BD al guardar cliente con JPA: " + e.getMessage());
             return false;
         }
     }

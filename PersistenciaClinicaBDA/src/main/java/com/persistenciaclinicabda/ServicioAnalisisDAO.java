@@ -3,35 +3,49 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.persistenciaclinicabda;
+import com.entidades.MuestraEntidad;
 import com.entidades.ServicioAnalisisEntidad;
-import com.persistenciaclinicabda.conexion.ConexionBD;
-import com.persistenciaclinicabda.conexion.IConexionBD;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 /**
  *
  * @author oscar
  */
 public class ServicioAnalisisDAO {
     
-    private IConexionBD conexion;
+    private EntityManagerFactory emf;
+
+    public java.util.List<ServicioAnalisisEntidad> obtenerTodosLosAnalisis;
 
     public ServicioAnalisisDAO() {
-        this.conexion = new ConexionBD();
+        this.emf = Persistence.createEntityManagerFactory("ClinicaPU");
     }
 
-    public void guardarAnalisis(ServicioAnalisisEntidad analisis) throws SQLException {
-        String sql = "INSERT INTO analisis (nombre, descripcion, id_muestra) VALUES (?, ?, ?)";
-        
-        try (Connection conn = conexion.crearConexion();
-             PreparedStatement comando = conn.prepareStatement(sql)) {
+    public void guardarAnalisis(ServicioAnalisisEntidad analisis, int idMuestra) throws Exception {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
             
-            comando.setString(1, analisis.getNombre());
-            comando.setString(2, analisis.getDescripcion());
-            comando.setInt(3, analisis.getIdMuestra()); 
-            
-            comando.executeUpdate();
+            MuestraEntidad muestraRef = em.getReference(MuestraEntidad.class, idMuestra);
+            analisis.setMuestra(muestraRef);
+            em.persist(analisis);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+    public java.util.List<com.entidades.ServicioAnalisisEntidad> obtenerTodosLosAnalisis() throws Exception {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createQuery("SELECT a FROM ServicioAnalisisEntidad a", com.entidades.ServicioAnalisisEntidad.class).getResultList();
+        } finally {
+            em.close();
         }
     }
 }

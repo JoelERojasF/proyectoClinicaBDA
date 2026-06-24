@@ -3,13 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.entidades;
-
+import jakarta.persistence.*;
 /**
  *
  * @author OscaR
  */
+@Entity
+@Table(name = "tipos_muestra")
 public class MuestraEntidad {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_muestra")
     private int idMuestra;
+
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
 
     public MuestraEntidad() {
@@ -35,5 +43,4 @@ public class MuestraEntidad {
         this.nombre = nombre;
     }
 
-   
 }

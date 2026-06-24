@@ -3,29 +3,33 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.entidades;
+import jakarta.persistence.*;
 import java.sql.Timestamp;
 /**
  *
  * @author Oscar
  */
+@Entity
+@Table(name = "pruebas_laboratorio")
 public class PruebaLaboratorioEntidad {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_prueba")
     private int idPrueba;
-    private Timestamp fechaHoraGeneracion; 
-    private int idCliente; 
-    private int idDoctor; 
+
+    @Column(name = "fecha_hora_generacion", insertable = false, updatable = false)
+    private Timestamp fechaHoraGeneracion;
+
+    @ManyToOne
+    @JoinColumn(name = "id_cliente", nullable = false)
+    private ClienteEntidad cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "id_doctor", nullable = false)
+    private DoctorEntidad doctor;
 
     public PruebaLaboratorioEntidad() {
-    }
-    
-    public PruebaLaboratorioEntidad(int idCliente, int idDoctor) {
-        this.idCliente = idCliente;
-        this.idDoctor = idDoctor;
-    }
-
-    public PruebaLaboratorioEntidad(Timestamp fechaHoraGeneracion, int idCliente, int idDoctor) {
-        this.fechaHoraGeneracion = fechaHoraGeneracion;
-        this.idCliente = idCliente;
-        this.idDoctor = idDoctor;
     }
 
     public int getIdPrueba() {
@@ -44,21 +48,20 @@ public class PruebaLaboratorioEntidad {
         this.fechaHoraGeneracion = fechaHoraGeneracion;
     }
 
-    public int getIdCliente() {
-        return idCliente;
+    public ClienteEntidad getCliente() {
+        return cliente;
     }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+    public void setCliente(ClienteEntidad cliente) {
+        this.cliente = cliente;
     }
 
-    public int getIdDoctor() {
-        return idDoctor;
+    public DoctorEntidad getDoctor() {
+        return doctor;
     }
 
-    public void setIdDoctor(int idDoctor) {
-        this.idDoctor = idDoctor;
+    public void setDoctor(DoctorEntidad doctor) {
+        this.doctor = doctor;
     }
 
-    
 }

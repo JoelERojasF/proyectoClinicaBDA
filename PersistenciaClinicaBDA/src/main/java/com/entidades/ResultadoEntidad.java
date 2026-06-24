@@ -3,34 +3,43 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.entidades;
-
+import jakarta.persistence.*;
 /**
  *
  * @author Oscar
  */
+@Entity
+@Table(name = "resultados")
 public class ResultadoEntidad {
-    private int idResultado;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_resultado")
+    private int idResult;
+
+    @Column(name = "valor_resultado", nullable = false, precision = 10, scale = 2)
     private double valorResultado;
+
+    @Column(name = "observacion", columnDefinition = "TEXT")
     private String observacion;
-    private int idPrueba;
-    private int idParametro; 
+
+    @ManyToOne
+    @JoinColumn(name = "id_prueba", nullable = false)
+    private PruebaLaboratorioEntidad prueba;
+
+    @ManyToOne
+    @JoinColumn(name = "id_parametro", nullable = false)
+    private ParametroEntidad parametro;
 
     public ResultadoEntidad() {
     }
 
-    public ResultadoEntidad(double valorResultado, String observacion, int idPrueba, int idParametro) {
-        this.valorResultado = valorResultado;
-        this.observacion = observacion;
-        this.idPrueba = idPrueba;
-        this.idParametro = idParametro;
+    public int getIdResult() {
+        return idResult;
     }
 
-    public int getIdResultado() {
-        return idResultado;
-    }
-
-    public void setIdResultado(int idResultado) {
-        this.idResultado = idResultado;
+    public void setIdResult(int idResult) {
+        this.idResult = idResult;
     }
 
     public double getValorResultado() {
@@ -49,21 +58,20 @@ public class ResultadoEntidad {
         this.observacion = observacion;
     }
 
-    public int getIdPrueba() {
-        return idPrueba;
+    public PruebaLaboratorioEntidad getPrueba() {
+        return prueba;
     }
 
-    public void setIdPrueba(int idPrueba) {
-        this.idPrueba = idPrueba;
+    public void setPrueba(PruebaLaboratorioEntidad prueba) {
+        this.prueba = prueba;
     }
 
-    public int getIdParametro() {
-        return idParametro;
+    public ParametroEntidad getParametro() {
+        return parametro;
     }
 
-    public void setIdParametro(int idParametro) {
-        this.idParametro = idParametro;
+    public void setParametro(ParametroEntidad parametro) {
+        this.parametro = parametro;
     }
-
 
 }

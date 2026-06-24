@@ -3,19 +3,37 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.entidades;
+import jakarta.persistence.*;
 import java.sql.Date;
 /**
  *
  * @author Oscar
  */
+@Entity
+@Table(name = "clientes")
 public class ClienteEntidad {
-    
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_cliente")
     private int idCliente;
+
+    @Column(name = "nombres", nullable = false, length = 100)
     private String nombres;
+
+    @Column(name = "apellido_paterno", nullable = false, length = 100)
     private String apellidoPaterno;
+
+    @Column(name = "apellido_materno", nullable = false, length = 100)
     private String apellidoMaterno;
+
+    @Column(name = "fecha_nacimiento", nullable = false)
     private Date fechaNacimiento;
+
+    @Column(name = "sexo", nullable = false)
     private String sexo;
+
+    @Column(name = "tipo_sangre", nullable = false, length = 10)
     private String tipoSangre;
 
     public ClienteEntidad() {
@@ -86,5 +104,4 @@ public class ClienteEntidad {
         this.tipoSangre = tipoSangre;
     }
 
-    
 }
