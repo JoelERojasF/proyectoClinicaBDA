@@ -1,4 +1,5 @@
 com\presentacionclinicabda\FrmRegistrarParametro$1.class
+com\presentacionclinicabda\FrmRegistrarDoctor$1.class
 com\presentacionclinicabda\FrmRegistrarMuestra.class
 com\presentacionclinicabda\FrmRegistrarParametro.class
 com\presentacionclinicabda\FrmRegistrarRango$1.class
@@ -6,6 +7,7 @@ com\presentacionclinicabda\FrmRegistrarParametro$ComboItem.class
 com\presentacionclinicabda\PresentacionClinicaBDA.class
 com\presentacionclinicabda\FrmRegistrarRango$ComboItem.class
 com\presentacionclinicabda\FrmRegistrarAnalisis$ComboItem.class
+com\presentacionclinicabda\FrmRegistrarDoctor.class
 com\presentacionclinicabda\FrmRegistrarRango.class
 com\presentacionclinicabda\FrmRegistrarAnalisis.class
 com\presentacionclinicabda\PresentacionClinicaBDA$1.class

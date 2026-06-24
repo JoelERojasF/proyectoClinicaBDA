@@ -7,6 +7,7 @@ com\entidades\ServicioAnalisisEntidad.class
 com\entidades\ClienteEntidad.class
 com\persistenciaclinicabda\ServicioAnalisisDAO.class
 com\entidades\ResultadoEntidad.class
+com\persistenciaclinicabda\DoctorDAO.class
 com\persistenciaclinicabda\MuestraDAO.class
 com\persistenciaclinicabda\ClienteDAO.class
 com\persistenciaclinicabda\conexion\ConexionBD.class

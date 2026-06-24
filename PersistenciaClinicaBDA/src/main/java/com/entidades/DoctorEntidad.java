@@ -14,15 +14,19 @@ public class DoctorEntidad {
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String sexo;
-
+    private String especialidad;
+    private String cedula;
+    
     public DoctorEntidad() {
     }
 
-    public DoctorEntidad(String nombres, String apellidoPaterno, String apellidoMaterno, String sexo) {
+    public DoctorEntidad(String nombres, String apellidoPaterno, String apellidoMaterno, String sexo, String especialidad, String cedula) {
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.sexo = sexo;
+        this.especialidad = especialidad;
+        this.cedula = cedula;
     }
 
     public int getIdDoctor() {
@@ -64,6 +68,24 @@ public class DoctorEntidad {
     public void setSexo(String sexo) {
         this.sexo = sexo;
     }
+
+    public String getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    
 
    
 }
