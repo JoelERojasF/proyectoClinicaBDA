@@ -1,2 +1,5 @@
 com\negocioclinicabda\ClienteBO.class
+com\negocioclinicabda\MuestraBO.class
 com\negocioclinicabda\NegocioClinicaBDA.class
+com\negocioclinicabda\ParametroBO.class
+com\negocioclinicabda\ServicioAnalisisBO.class
