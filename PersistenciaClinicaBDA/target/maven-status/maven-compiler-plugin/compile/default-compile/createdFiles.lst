@@ -2,6 +2,7 @@ com\entidades\PruebaLaboratorioEntidad.class
 com\persistenciaclinicabda\conexion\IConexionBD.class
 com\persistenciaclinicabda\ParametroDAO.class
 com\entidades\MuestraEntidad.class
+com\persistenciaclinicabda\RangoDAO.class
 com\entidades\ServicioAnalisisEntidad.class
 com\entidades\ClienteEntidad.class
 com\persistenciaclinicabda\ServicioAnalisisDAO.class
