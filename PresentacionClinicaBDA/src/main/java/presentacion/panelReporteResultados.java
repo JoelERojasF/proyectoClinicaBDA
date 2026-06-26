@@ -29,14 +29,33 @@ public class panelReporteResultados extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnSolicitudes = new javax.swing.JButton();
+        btnAnlaisis = new javax.swing.JButton();
+        btnResultados = new javax.swing.JButton();
 
         jLabel1.setText("resultados");
 
-        jButton1.setText("inicio");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSolicitudes.setText("solicitudes");
+        btnSolicitudes.setMaximumSize(new java.awt.Dimension(84, 23));
+        btnSolicitudes.setMinimumSize(new java.awt.Dimension(84, 23));
+        btnSolicitudes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnSolicitudesActionPerformed(evt);
+            }
+        });
+
+        btnAnlaisis.setText("analisis");
+        btnAnlaisis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnlaisisActionPerformed(evt);
+            }
+        });
+
+        btnResultados.setText("resultados");
+        btnResultados.setEnabled(false);
+        btnResultados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResultadosActionPerformed(evt);
             }
         });
 
@@ -45,31 +64,50 @@ public class panelReporteResultados extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(174, 174, 174)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel1))
-                .addContainerGap(154, Short.MAX_VALUE))
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnResultados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAnlaisis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSolicitudes, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(290, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(137, 137, 137)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(41, 41, 41))
+                .addGap(133, 133, 133)
+                .addComponent(btnSolicitudes, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAnlaisis, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(btnResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnSolicitudesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitudesActionPerformed
         // TODO add your handling code here:
-        frame.mostrarPanel("menu");
-    }//GEN-LAST:event_jButton1ActionPerformed
+        frame.mostrarPanel("solicitud");
+    }//GEN-LAST:event_btnSolicitudesActionPerformed
+
+    private void btnAnlaisisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnlaisisActionPerformed
+        // TODO add your handling code here:
+        frame.mostrarPanel("analisis");
+    }//GEN-LAST:event_btnAnlaisisActionPerformed
+
+    private void btnResultadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResultadosActionPerformed
+        // TODO add your handling code here:
+        frame.mostrarPanel("resultados");
+    }//GEN-LAST:event_btnResultadosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnAnlaisis;
+    private javax.swing.JButton btnResultados;
+    private javax.swing.JButton btnSolicitudes;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,6 +4,7 @@
  */
 package com.persistenciaclinicabda;
 import com.entidades.DoctorEntidad;
+import com.persistenciaclinicabda.conexion.IConexionBD;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -13,14 +14,14 @@ import jakarta.persistence.Persistence;
  */
 public class DoctorDAO {
     
-    private EntityManagerFactory emf;
+    private final IConexionBD conexionBD;
 
-    public DoctorDAO() {
-        this.emf = Persistence.createEntityManagerFactory("ClinicaPU");
+    public DoctorDAO(IConexionBD conexionBD) {
+        this.conexionBD = conexionBD;
     }
 
     public void guardarDoctor(DoctorEntidad doctor) throws Exception {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = conexionBD.crearConexion();
         try {
             em.getTransaction().begin();
             em.persist(doctor);

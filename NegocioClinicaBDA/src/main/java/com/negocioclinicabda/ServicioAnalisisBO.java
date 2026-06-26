@@ -5,6 +5,8 @@
 package com.negocioclinicabda;
 import com.entidades.ServicioAnalisisEntidad;
 import com.persistenciaclinicabda.ServicioAnalisisDAO;
+import com.persistenciaclinicabda.conexion.ConexionBD;
+import com.persistenciaclinicabda.conexion.IConexionBD;
 /**
  *
  * @author oscar
@@ -12,9 +14,11 @@ import com.persistenciaclinicabda.ServicioAnalisisDAO;
 public class ServicioAnalisisBO {
     
     private ServicioAnalisisDAO analisisDAO;
+    IConexionBD conexion = new ConexionBD();
+
 
     public ServicioAnalisisBO() {
-        this.analisisDAO = new ServicioAnalisisDAO();
+        this.analisisDAO = new ServicioAnalisisDAO(conexion);
     }
 
     public boolean registrarAnalisis(String nombre, String descripcion, int idMuestra) {

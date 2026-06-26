@@ -5,6 +5,7 @@
 package com.persistenciaclinicabda;
 import com.entidades.ParametroEntidad;
 import com.entidades.RangoEntidad;
+import com.persistenciaclinicabda.conexion.IConexionBD;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -14,14 +15,14 @@ import jakarta.persistence.Persistence;
  */
 public class RangoDAO {
 
-    private EntityManagerFactory emf;
+    private final IConexionBD conexionBD;
 
-    public RangoDAO() {
-        this.emf = Persistence.createEntityManagerFactory("ClinicaPU");
+    public RangoDAO(IConexionBD conexionBD) {
+        this.conexionBD = conexionBD;
     }
 
     public void guardarRango(RangoEntidad rango, int idParametro) throws Exception {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = conexionBD.crearConexion();
         try {
             em.getTransaction().begin();
             

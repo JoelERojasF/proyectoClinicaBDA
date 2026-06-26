@@ -4,6 +4,7 @@
  */
 package com.entidades;
 import jakarta.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 /**
  *
@@ -11,7 +12,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "pruebas_laboratorio")
-public class PruebaLaboratorioEntidad {
+public class PruebaLaboratorioEntidad implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,13 +4,14 @@
  */
 package com.entidades;
 import jakarta.persistence.*;
+import java.io.Serializable;
 /**
  *
  * @author Oscar
  */
 @Entity
 @Table(name = "parametros")
-public class ParametroEntidad {
+public class ParametroEntidad implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

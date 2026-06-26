@@ -5,6 +5,8 @@
 package com.negocioclinicabda;
 import com.entidades.DoctorEntidad;
 import com.persistenciaclinicabda.DoctorDAO;
+import com.persistenciaclinicabda.conexion.ConexionBD;
+import com.persistenciaclinicabda.conexion.IConexionBD;
 /**
  *
  * @author oscar
@@ -12,9 +14,11 @@ import com.persistenciaclinicabda.DoctorDAO;
 public class DoctorBO {
     
     private DoctorDAO doctorDAO;
+    IConexionBD conexion = new ConexionBD();
+
 
     public DoctorBO() {
-        this.doctorDAO = new DoctorDAO();
+        this.doctorDAO = new DoctorDAO(conexion);
     }
 
     public boolean registrarDoctor(String nombres, String apellidoPaterno, String apellidoMaterno, String sexo, String especialidad, String cedula) {

@@ -4,13 +4,14 @@
  */
 package com.entidades;
 import jakarta.persistence.*;
+import java.io.Serializable;
 /**
  *
  * @author Oscar
  */
 @Entity
 @Table(name = "doctores")
-public class DoctorEntidad {
+public class DoctorEntidad implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

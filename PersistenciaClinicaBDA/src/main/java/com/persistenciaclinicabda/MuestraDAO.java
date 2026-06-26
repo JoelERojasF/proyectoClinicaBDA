@@ -4,6 +4,7 @@
  */
 package com.persistenciaclinicabda;
 import com.entidades.MuestraEntidad;
+import com.persistenciaclinicabda.conexion.IConexionBD;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -14,14 +15,14 @@ import java.util.List;
  */
 public class MuestraDAO {
     
-    private EntityManagerFactory emf;
+   private final IConexionBD conexionBD;
 
-    public MuestraDAO() {
-        this.emf = Persistence.createEntityManagerFactory("ClinicaPU");
+    public MuestraDAO(IConexionBD conexionBD) {
+        this.conexionBD = conexionBD;
     }
 
     public void guardarMuestra(MuestraEntidad muestra) throws Exception {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = conexionBD.crearConexion();
         try {
             em.getTransaction().begin();
             em.persist(muestra);
@@ -37,7 +38,7 @@ public class MuestraDAO {
     }
 
     public List<MuestraEntidad> obtenerTodasLasMuestras() throws Exception {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = conexionBD.crearConexion();
         try {
             String jpql = "SELECT m FROM MuestraEntidad m";
             return em.createQuery(jpql, MuestraEntidad.class).getResultList();

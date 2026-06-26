@@ -4,6 +4,7 @@
  */
 package com.entidades;
 import jakarta.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 /**
  *
@@ -11,11 +12,11 @@ import java.sql.Date;
  */
 @Entity
 @Table(name = "clientes")
-public class ClienteEntidad {
+public class ClienteEntidad implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_cliente")
+    @Column(name = "id_cliente", nullable = false)
     private int idCliente;
 
     @Column(name = "nombres", nullable = false, length = 100)

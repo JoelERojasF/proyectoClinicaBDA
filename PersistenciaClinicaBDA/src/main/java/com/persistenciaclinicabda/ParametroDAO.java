@@ -5,6 +5,7 @@
 package com.persistenciaclinicabda;
 import com.entidades.ParametroEntidad;
 import com.entidades.ServicioAnalisisEntidad;
+import com.persistenciaclinicabda.conexion.IConexionBD;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -14,14 +15,14 @@ import jakarta.persistence.Persistence;
  */
 public class ParametroDAO {
 
-    private EntityManagerFactory emf;
+    private final IConexionBD conexionBD;
 
-    public ParametroDAO() {
-        this.emf = Persistence.createEntityManagerFactory("ClinicaPU");
+    public ParametroDAO(IConexionBD conexionBD) {
+        this.conexionBD = conexionBD;
     }
 
     public void guardarParametro(ParametroEntidad parametro, int idAnalisis) throws Exception {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = conexionBD.crearConexion();
         try {
             em.getTransaction().begin();
             
@@ -41,7 +42,7 @@ public class ParametroDAO {
         }
     }
     public java.util.List<com.entidades.ParametroEntidad> obtenerTodosLosParametros() throws Exception {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = conexionBD.crearConexion();
         try {
             return em.createQuery("SELECT p FROM ParametroEntidad p", com.entidades.ParametroEntidad.class).getResultList();
         } finally {

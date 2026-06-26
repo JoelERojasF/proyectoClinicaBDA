@@ -5,6 +5,7 @@
 package com.entidades;
 
 import jakarta.persistence.*;
+import java.io.Serializable;
 
 /**
  *
@@ -12,7 +13,7 @@ import jakarta.persistence.*;
  */
 @Entity
 @Table(name = "analisis")
-public class ServicioAnalisisEntidad {
+public class ServicioAnalisisEntidad implements Serializable {
 @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_analisis")

@@ -4,6 +4,7 @@
  */
 package com.persistenciaclinicabda;
 import com.entidades.ClienteEntidad;
+import com.persistenciaclinicabda.conexion.IConexionBD;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -13,25 +14,22 @@ import jakarta.persistence.Persistence;
  */
 public class ClienteDAO {
     
-    private EntityManagerFactory emf;
-
-    public ClienteDAO() {
-        this.emf = Persistence.createEntityManagerFactory("ClinicaPU");
+     private final IConexionBD conexionBD;
+    
+    public ClienteDAO(IConexionBD conexionBD) {
+        this.conexionBD = conexionBD;
     }
 
     public void guardarCliente(ClienteEntidad cliente) throws Exception {
-        EntityManager em = emf.createEntityManager();
-        try {
+        EntityManager em = conexionBD.crearConexion();
             em.getTransaction().begin();
             em.persist(cliente);
             em.getTransaction().commit();
-        } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            throw e;
-        } finally {
-            em.close();
-        }
+        
+
+        
     }
 }
