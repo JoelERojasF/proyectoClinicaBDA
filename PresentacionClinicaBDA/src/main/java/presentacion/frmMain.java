@@ -4,7 +4,10 @@
  */
 package presentacion;
 
+import com.negocioclinicabda.ClienteBO;
+import com.negocioclinicabda.DoctorBO;
 import java.awt.CardLayout;
+import java.sql.Date;
 import javax.swing.JPanel;
 
 /**
@@ -15,13 +18,16 @@ public class frmMain extends javax.swing.JFrame {
     private CardLayout cardLayout;
     private JPanel contenedor;
     
-    
+    private final ClienteBO clienteBO = new ClienteBO();;
+    private final DoctorBO doctorBO = new DoctorBO();
     
     /**
      * Creates new form frmMain
      */
     public frmMain() {
         initComponents();
+        
+        
         setExtendedState(this.MAXIMIZED_BOTH);
         
         cardLayout = new CardLayout();
@@ -45,6 +51,53 @@ public class frmMain extends javax.swing.JFrame {
     
     public void mostrarPanel(String nombre) {
         cardLayout.show(contenedor, nombre);
+    }
+    
+    public void cargarMasivos(){
+        //clientes
+        //1
+        clienteBO.registrarCliente("Daniela", "López", "Valenzuela", new Date(1998, 4, 12), "Femenino", "O+");
+        //2
+        clienteBO.registrarCliente("Carlos Alberto", "Méndez", "Ibarra", new Date(1987, 3, 11), "Masculino", "A+");
+        //3
+        clienteBO.registrarCliente("Fernanda", "Ruiz", "Cota", new Date(2001, 6, 25), "Femenino", "B");
+        //4
+        clienteBO.registrarCliente("José Manuel", "Navarro", "Acosta", new Date(1993, 9, 18), "Masculino", "AB-");
+        //5
+        clienteBO.registrarCliente("Andrea", "Torres", "Camacho", new Date(2001, 6, 25), "Femenino", "O-");
+        //6
+        clienteBO.registrarCliente("Miguel Ángel", "Salazar", "Duarte", new Date(1985, 7, 7), "Masculino", "A-");
+        //7
+        clienteBO.registrarCliente("Valeria", "Espinoza", "Romero", new Date(2000, 2, 14), "Femenino", "B-");
+        //8
+        clienteBO.registrarCliente("Ricardo", "Beltrán", "Soto", new Date(1991, 12, 21), "Masculino", "AB+");
+        //9
+        clienteBO.registrarCliente("Paola", "Cervantes", "Medina", new Date(1997, 5, 10), "Femenino", "O+");
+        //10
+        clienteBO.registrarCliente("Luis Enrique", "González", "Armenta", new Date(1989, 8, 16), "Masculino", "A+");
+        
+        //doctores
+        //1
+        doctorBO.registrarDoctor("Arturo", "Zamora", "Fuentes", "Masculino", "Cardiología", "8456123");
+        //2
+        doctorBO.registrarDoctor("Alejandra", "Paredes", "León", "Femenino", "Pediatría", "7319458");
+        //3
+        doctorBO.registrarDoctor("Roberto", "Aguilar", "Noriega", "Masculino", "Medicina Interna", "9623147");
+        //4
+        doctorBO.registrarDoctor("Mariana", "Ochoa", "Valdez", "Femenino", "Dermatología", "6841275");
+        //5
+        doctorBO.registrarDoctor("Sergio", "Castro", "Vázquez", "Masculino", "Traumatología", "9035812");
+        //6
+        doctorBO.registrarDoctor("Karla", "Delgado", "Montoya", "Femenino", "Ginecología", "7124960");
+        //7
+        doctorBO.registrarDoctor("Fernando", "Herrera", "Escalante", "Masculino", "Neurología", "8567031");
+        //8
+        doctorBO.registrarDoctor("Patricia", "Ríos", "Mendoza", "Femenino", "Oftalmología", "7942658");
+        //9
+        doctorBO.registrarDoctor("Eduardo", "Luna", "Sandoval", "Masculino", "Radiología", "6384109");
+        //10
+        doctorBO.registrarDoctor("Sofía", "Jiménez", "Tapia", "Femenino", "Endocrinología", "9258714");
+        
     }
 
     /**
