@@ -27,7 +27,7 @@ public class PruebaLaboratorioEntidad implements Serializable {
     private ClienteEntidad cliente;
 
     @ManyToOne
-    @JoinColumn(name = "id_doctor", nullable = false)
+    @JoinColumn(name = "id_doctor")
     private DoctorEntidad doctor;
 
     public PruebaLaboratorioEntidad() {

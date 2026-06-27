@@ -37,16 +37,20 @@ public class frmMain extends javax.swing.JFrame {
         panelReporteResultados resultados = new panelReporteResultados(this);
         panelServiciosAnalisis analisis = new panelServiciosAnalisis(this);
         panelSolicitudes solicitud = new panelSolicitudes(this);
+        panelGeneracionReportes reportes  = new panelGeneracionReportes(this);
+        panelAgregarServicioAnalisis agregarAnalisis = new panelAgregarServicioAnalisis(this);
+        panelModificarServicioAnalisis modificarAnalisis = new panelModificarServicioAnalisis(this);
         
         contenedor.add(menu, "menu");
         contenedor.add(resultados, "resultados");
         contenedor.add(analisis, "analisis");
         contenedor.add(solicitud, "solicitud");
+        contenedor.add(reportes, "reportes");
+        contenedor.add(agregarAnalisis, "agregarAnalisis");
+        contenedor.add(modificarAnalisis, "modificarAnalisis");
         
         setContentPane(contenedor);
-        cardLayout.show(contenedor, "menu");
-        
-        
+        mostrarPanel("menu");
     }
     
     public void mostrarPanel(String nombre) {

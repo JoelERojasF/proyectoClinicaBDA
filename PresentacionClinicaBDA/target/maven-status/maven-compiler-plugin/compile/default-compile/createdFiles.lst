@@ -12,6 +12,7 @@ com\presentacionclinicabda\FrmRegistrarAnalisis$ComboItem.class
 com\presentacionclinicabda\FrmRegistrarDoctor.class
 presentacion\frmMain$1.class
 com\presentacionclinicabda\FrmRegistrarAnalisis.class
+presentacion\panelGeneracionReportes.class
 presentacion\panelSolicitudes$2.class
 com\presentacionclinicabda\FrmRegistrarCliente.class
 com\presentacionclinicabda\FrmRegistrarMuestra$1.class
@@ -23,6 +24,7 @@ presentacion\panelServiciosAnalisis.class
 presentacion\frmMain.class
 presentacion\panelMenu$2.class
 com\presentacionclinicabda\FrmRegistrarRango$1.class
+presentacion\panelServiciosAnalisis$4.class
 com\presentacionclinicabda\PresentacionClinicaBDA.class
 com\presentacionclinicabda\FrmRegistrarRango$ComboItem.class
 presentacion\panelSolicitudes$3.class
