@@ -4,18 +4,68 @@
  */
 package presentacion;
 
+import com.entidades.ClienteEntidad;
+import com.negocioclinicabda.ClienteBO;
+import com.negocioclinicabda.ResultadoBO;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author le0jx
  */
 public class panelGeneracionReportes extends javax.swing.JPanel {
     private frmMain frame;
+    private final ClienteBO clienteBO = new ClienteBO();
+    private final ResultadoBO resultadoBO = new ResultadoBO();
     /**
      * Creates new form panelGeneracionReportes
      */
     public panelGeneracionReportes(frmMain frame) {
         initComponents();
         this.frame = frame;
+        actualizarPanel();
+    }
+    
+    public void actualizarPanel() {
+        comboBoxCliente.removeAllItems();
+        for (ClienteEntidad c : clienteBO.obtenerListaClientes()) {
+            String etiqueta = c.getIdCliente() + " - " + c.getNombres() + " " + c.getApellidoPaterno();
+            comboBoxCliente.addItem(new ComboItem(c.getIdCliente(), etiqueta));
+        }
+        txtReporte.setText("");
+    }
+    
+    private void generar(){
+        ComboItem item = (ComboItem) comboBoxCliente.getSelectedItem();
+
+        if (item == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String reporte = resultadoBO.generarReportePorCliente(item.getId());
+        txtReporte.setText(reporte);
+        txtReporte.setCaretPosition(0);
+    }
+
+    private static class ComboItem {
+
+        private final int id;
+        private final String nombre;
+
+        public ComboItem(int id, String nombre) {
+            this.id = id;
+            this.nombre = nombre;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        @Override
+        public String toString() {
+            return nombre;
+        }
     }
 
     /**
@@ -27,19 +77,159 @@ public class panelGeneracionReportes extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        comboBoxCliente = new javax.swing.JComboBox<>();
+        btnGenerar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtReporte = new javax.swing.JTextArea();
+        btnCancelar = new javax.swing.JButton();
+        btnReportes1 = new javax.swing.JButton();
+        btnResultados = new javax.swing.JButton();
+        btnAnlaisis = new javax.swing.JButton();
+        btnSolicitudes = new javax.swing.JButton();
+
+        setMaximumSize(new java.awt.Dimension(638, 508));
+        setMinimumSize(new java.awt.Dimension(638, 508));
+        setPreferredSize(new java.awt.Dimension(638, 508));
+
+        jLabel1.setText("cliente:");
+
+        btnGenerar.setText("generar");
+        btnGenerar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarActionPerformed(evt);
+            }
+        });
+
+        txtReporte.setEditable(false);
+        txtReporte.setColumns(20);
+        txtReporte.setLineWrap(true);
+        txtReporte.setRows(5);
+        txtReporte.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(txtReporte);
+
+        btnCancelar.setText("cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        btnReportes1.setText("reportes");
+        btnReportes1.setEnabled(false);
+        btnReportes1.setMaximumSize(new java.awt.Dimension(84, 23));
+        btnReportes1.setMinimumSize(new java.awt.Dimension(84, 23));
+
+        btnResultados.setText("resultados");
+        btnResultados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResultadosActionPerformed(evt);
+            }
+        });
+
+        btnAnlaisis.setText("analisis");
+        btnAnlaisis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnlaisisActionPerformed(evt);
+            }
+        });
+
+        btnSolicitudes.setText("solicitudes");
+        btnSolicitudes.setMaximumSize(new java.awt.Dimension(84, 23));
+        btnSolicitudes.setMinimumSize(new java.awt.Dimension(84, 23));
+        btnSolicitudes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSolicitudesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboBoxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(127, 127, 127)
+                        .addComponent(btnCancelar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnGenerar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnResultados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAnlaisis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSolicitudes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnReportes1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(comboBoxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGenerar)
+                    .addComponent(btnCancelar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(116, 116, 116)
+                        .addComponent(btnSolicitudes, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAnlaisis, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(btnResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnReportes1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
+        // TODO add your handling code here:
+        generar();
+    }//GEN-LAST:event_btnGenerarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        frame.mostrarPanel("menu");
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnResultadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResultadosActionPerformed
+        // TODO add your handling code here:
+        frame.mostrarPanel("resultados");
+    }//GEN-LAST:event_btnResultadosActionPerformed
+
+    private void btnAnlaisisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnlaisisActionPerformed
+        // TODO add your handling code here:
+        frame.mostrarPanel("analisis");
+    }//GEN-LAST:event_btnAnlaisisActionPerformed
+
+    private void btnSolicitudesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitudesActionPerformed
+        // TODO add your handling code here:
+        frame.mostrarPanel("solicitud");
+    }//GEN-LAST:event_btnSolicitudesActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAnlaisis;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnGenerar;
+    private javax.swing.JButton btnReportes1;
+    private javax.swing.JButton btnResultados;
+    private javax.swing.JButton btnSolicitudes;
+    private javax.swing.JComboBox<ComboItem> comboBoxCliente;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea txtReporte;
     // End of variables declaration//GEN-END:variables
 }

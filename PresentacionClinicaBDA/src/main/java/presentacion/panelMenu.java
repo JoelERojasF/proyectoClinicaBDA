@@ -35,6 +35,7 @@ public class panelMenu extends javax.swing.JPanel {
         btnAnlaisis = new javax.swing.JButton();
         btnSolicitudes = new javax.swing.JButton();
         btnCargaDatos = new javax.swing.JButton();
+        btnReportes = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(638, 508));
         setMinimumSize(new java.awt.Dimension(638, 508));
@@ -72,6 +73,15 @@ public class panelMenu extends javax.swing.JPanel {
             }
         });
 
+        btnReportes.setText("reportes");
+        btnReportes.setMaximumSize(new java.awt.Dimension(84, 23));
+        btnReportes.setMinimumSize(new java.awt.Dimension(84, 23));
+        btnReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -79,6 +89,7 @@ public class panelMenu extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -102,7 +113,9 @@ public class panelMenu extends javax.swing.JPanel {
                     .addComponent(btnCargaDatos))
                 .addGap(12, 12, 12)
                 .addComponent(btnResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(207, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(154, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -133,10 +146,16 @@ public class panelMenu extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnCargaDatosActionPerformed
 
+    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
+        // TODO add your handling code here:
+        frame.mostrarPanel("reportes");
+    }//GEN-LAST:event_btnReportesActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnlaisis;
     private javax.swing.JButton btnCargaDatos;
+    private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnResultados;
     private javax.swing.JButton btnSolicitudes;
     private javax.swing.JLabel jLabel1;

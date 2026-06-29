@@ -65,6 +65,8 @@ public class frmMain extends javax.swing.JFrame {
             case "agregarRangos": agregarRangos.actualizarPanel(); break;
             case "solicitud": solicitud.actualizarPanel();
             case "agregarSolicitud": agregarSolicitud.actualizarPanel(); break;
+            case "resultados": resultados.actualizarPanel(); break;
+            case "reportes": reportes.actualizarPanel(); break;
         }
         cardLayout.show(contenedor, nombre);
         

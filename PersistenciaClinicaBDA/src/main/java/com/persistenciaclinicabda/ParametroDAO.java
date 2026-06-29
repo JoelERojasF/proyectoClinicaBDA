@@ -49,4 +49,16 @@ public class ParametroDAO {
             em.close();
         }
     }
+    
+    public java.util.List<com.entidades.ParametroEntidad> obtenerParametrosPorAnalisis(int idAnalisis) throws Exception {
+        EntityManager em = conexionBD.crearConexion();
+        try {
+            String jpql = "SELECT p FROM ParametroEntidad p WHERE p.analisis.idAnalisis = :idAnalisis ORDER BY p.ordenAparicion";
+            return em.createQuery(jpql, com.entidades.ParametroEntidad.class)
+                    .setParameter("idAnalisis", idAnalisis)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
 }

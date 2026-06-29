@@ -11,6 +11,8 @@ import com.entidades.PruebaLaboratorioEntidad;
 import com.entidades.RangoEntidad;
 import com.entidades.ResultadoEntidad;
 import com.entidades.ServicioAnalisisEntidad;
+import com.persistenciaclinicabda.ParametroDAO;
+import com.persistenciaclinicabda.PruebaLaboratorioDAO;
 import com.persistenciaclinicabda.RangoDAO;
 import com.persistenciaclinicabda.ResultadoDAO;
 import com.persistenciaclinicabda.conexion.ConexionBD;
@@ -33,9 +35,42 @@ public class ResultadoBO {
     private IConexionBD conexion = new ConexionBD();
     private ResultadoDAO resultadoDAO = new ResultadoDAO(conexion);
     private RangoDAO rangoDAO = new RangoDAO(conexion);
+    private final ParametroDAO parametroDAO = new ParametroDAO(conexion);
+
+    public List<ParametroEntidad> obtenerParametrosDeAnalisis(int idAnalisis) {
+        try {
+            return parametroDAO.obtenerParametrosPorAnalisis(idAnalisis);
+        } catch (Exception e) {
+            System.out.println("Error al consultar parámetros del análisis: " + e.getMessage());
+            return java.util.Collections.emptyList();
+        }
+    }
+
+    public RangoEntidad obtenerRangoSugerido(ParametroEntidad parametro, String sexo, int edad) {
+        try {
+            return rangoDAO.buscarRango(parametro, sexo, edad);
+        } catch (Exception e) {
+            System.out.println("Error al consultar rango: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public boolean registrarResultado(int idPrueba, int idParametro, double valor, String observacion) {
+        ResultadoEntidad resultado = new ResultadoEntidad();
+        resultado.setValorResultado(valor);
+        resultado.setObservacion(observacion);
+
+        try {
+            resultadoDAO.guardarResultado(resultado, idPrueba, idParametro);
+            System.out.println("Éxito: Resultado registrado correctamente con JPA.");
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error en BD al guardar resultado con JPA: " + e.getMessage());
+            return false;
+        }
+    }
     
-    public String generarReporte(
-            List<Integer> idsPrueba) throws SQLException {
+    public String generarReporte(List<Integer> idsPrueba) throws SQLException {
 
         List<ResultadoEntidad> resultados= resultadoDAO.buscarResultadosPorPruebas(idsPrueba);
 
@@ -60,6 +95,25 @@ public class ResultadoBO {
         }
 
         return sb.toString();
+    }
+    
+    public String generarReportePorCliente(int idCliente) {
+        try {
+            PruebaLaboratorioDAO pruebaDAO = new PruebaLaboratorioDAO(conexion);
+            List<Integer> idsPrueba = pruebaDAO.obtenerTodasPruebas().stream()
+                    .filter(p -> p.getCliente().getIdCliente() == idCliente)
+                    .map(PruebaLaboratorioEntidad::getIdPrueba)
+                    .collect(Collectors.toList());
+
+            if (idsPrueba.isEmpty()) {
+                return "Este cliente no tiene pruebas registradas.";
+            }
+
+            return generarReporte(idsPrueba);
+        } catch (Exception e) {
+            System.out.println("Error al generar reporte por cliente: " + e.getMessage());
+            return "Ocurrió un error al generar el reporte.";
+        }
     }
 
     private void escribirEncabezado(StringBuilder sb, ClienteEntidad cliente, int edad) {

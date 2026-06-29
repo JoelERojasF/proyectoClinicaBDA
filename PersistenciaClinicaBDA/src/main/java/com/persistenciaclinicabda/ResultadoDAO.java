@@ -27,6 +27,29 @@ public class ResultadoDAO {
         this.conexionBD = conexionBD;
     }
     
+    public void guardarResultado(ResultadoEntidad resultado, int idPrueba, int idParametro) throws Exception {
+        EntityManager em = conexionBD.crearConexion();
+        try {
+            em.getTransaction().begin();
+
+            PruebaLaboratorioEntidad pruebaRef = em.getReference(PruebaLaboratorioEntidad.class, idPrueba);
+            ParametroEntidad parametroRef = em.getReference(ParametroEntidad.class, idParametro);
+
+            resultado.setPrueba(pruebaRef);
+            resultado.setParametro(parametroRef);
+
+            em.persist(resultado);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+    
     public List<ResultadoEntidad> buscarResultadosPorPruebas(List<Integer> idsPrueba) throws SQLException {
         EntityManager em = conexionBD.crearConexion();
 
