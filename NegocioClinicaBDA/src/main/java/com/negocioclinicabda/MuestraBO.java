@@ -38,6 +38,12 @@ public class MuestraBO {
             return false;
         }
     }
+    
+    public MuestraEntidad buscarEntidad(){
+    
+        return null;
+    }
+    
     public java.util.List<com.entidades.MuestraEntidad> obtenerListaMuestras() {
         try {
             return muestraDAO.obtenerTodasLasMuestras();

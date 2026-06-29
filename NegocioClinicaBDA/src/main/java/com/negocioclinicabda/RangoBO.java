@@ -38,6 +38,7 @@ public class RangoBO {
             return false;
         }
     }
+    
     public java.util.List<com.entidades.ParametroEntidad> obtenerListaParametros() {
         try {
             return new com.persistenciaclinicabda.ParametroDAO(conexion).obtenerTodosLosParametros();

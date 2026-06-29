@@ -9,6 +9,7 @@ import com.persistenciaclinicabda.conexion.IConexionBD;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import java.sql.SQLException;
 /**
  *
  * @author oscar
@@ -41,10 +42,29 @@ public class ServicioAnalisisDAO {
             em.close();
         }
     }
+    
+    public ServicioAnalisisEntidad actualizarAnalisis(int id, String nombre, String descripcion, int idMuestra) throws SQLException{
+        EntityManager em = conexionBD.crearConexion();
+         try {
+            em.getTransaction().begin();
+            //pendiente
+ 
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            em.close();
+        }
+         return null;
+    }
+    
     public java.util.List<com.entidades.ServicioAnalisisEntidad> obtenerTodosLosAnalisis() throws Exception {
         EntityManager em = conexionBD.crearConexion();
         try {
-            return em.createQuery("SELECT a FROM ServicioAnalisisEntidad a", com.entidades.ServicioAnalisisEntidad.class).getResultList();
+            return em.createQuery("SELECT a FROM ServicioAnalisisEntidad a", ServicioAnalisisEntidad.class).getResultList();
         } finally {
             em.close();
         }

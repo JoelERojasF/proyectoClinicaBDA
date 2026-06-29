@@ -4,18 +4,43 @@
  */
 package presentacion;
 
+import com.entidades.ServicioAnalisisEntidad;
+import com.negocioclinicabda.ServicioAnalisisBO;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author le0jx
  */
 public class panelServiciosAnalisis extends javax.swing.JPanel {
     private frmMain frame;
+    private final ServicioAnalisisBO analisisBO = new ServicioAnalisisBO();
+    
     /**
      * Creates new form panelServiciosAnalisis
      */
     public panelServiciosAnalisis(frmMain frame) {
         initComponents();
         this.frame = frame;
+        actualizarPanel();
+    }
+    
+    public void actualizarPanel(){
+        DefaultTableModel modelo = (DefaultTableModel) tablaServiciosAnalisis.getModel();
+        modelo.setRowCount(0);
+        List<ServicioAnalisisEntidad> analisisLista = analisisBO.obtenerTodosLosAnalisis();
+        if(!analisisLista.isEmpty()){
+        for (ServicioAnalisisEntidad analisis : analisisLista) {
+            Object[] fila = {
+                analisis.getIdAnalisis(),
+                analisis.getNombre(),
+                analisis.getDescripcion(),
+                analisis.getMuestra().getNombre()
+            };
+            modelo.addRow(fila);
+        }
+        }
     }
 
     /**
@@ -33,11 +58,12 @@ public class panelServiciosAnalisis extends javax.swing.JPanel {
         btnResultados = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaServiciosAnalisis = new javax.swing.JTable();
-        btnAgregar = new javax.swing.JButton();
-        btnModificar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
-        txtBuscar = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
+        btnAgregarAnalisis = new javax.swing.JButton();
+        btnAgregarParametro = new javax.swing.JButton();
+        btnAgregarRango = new javax.swing.JButton();
+
+        setMaximumSize(new java.awt.Dimension(638, 508));
+        setMinimumSize(new java.awt.Dimension(638, 508));
 
         jLabel1.setText("catalogo analisis");
 
@@ -70,14 +96,14 @@ public class panelServiciosAnalisis extends javax.swing.JPanel {
 
             },
             new String [] {
-                "id", "nombre", "descripcion"
+                "id", "nombre", "descripcion", "muestra"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -90,31 +116,24 @@ public class panelServiciosAnalisis extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tablaServiciosAnalisis);
 
-        btnAgregar.setText("agregar");
-        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarAnalisis.setText("agregar analisis");
+        btnAgregarAnalisis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarActionPerformed(evt);
+                btnAgregarAnalisisActionPerformed(evt);
             }
         });
 
-        btnModificar.setText("modificar");
-        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarParametro.setText("agregar parametro");
+        btnAgregarParametro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarActionPerformed(evt);
+                btnAgregarParametroActionPerformed(evt);
             }
         });
 
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarRango.setText("agregar rango");
+        btnAgregarRango.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-
-        btnBuscar.setText("buscar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
+                btnAgregarRangoActionPerformed(evt);
             }
         });
 
@@ -131,21 +150,18 @@ public class panelServiciosAnalisis extends javax.swing.JPanel {
                     .addComponent(btnResultados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAnlaisis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSolicitudes, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnEliminar)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnModificar)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnAgregar))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(btnBuscar)))
-                .addContainerGap(41, Short.MAX_VALUE))
+                        .addGap(21, 21, 21)
+                        .addComponent(btnAgregarAnalisis)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAgregarParametro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAgregarRango))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,18 +177,14 @@ public class panelServiciosAnalisis extends javax.swing.JPanel {
                         .addGap(12, 12, 12)
                         .addComponent(btnResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscar))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                        .addGap(44, 44, 44)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgregar)
-                    .addComponent(btnModificar)
-                    .addComponent(btnEliminar))
-                .addContainerGap(90, Short.MAX_VALUE))
+                    .addComponent(btnAgregarAnalisis)
+                    .addComponent(btnAgregarParametro)
+                    .addComponent(btnAgregarRango))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -191,37 +203,31 @@ public class panelServiciosAnalisis extends javax.swing.JPanel {
         frame.mostrarPanel("resultados");
     }//GEN-LAST:event_btnResultadosActionPerformed
 
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+    private void btnAgregarAnalisisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAnalisisActionPerformed
         // TODO add your handling code here:
         frame.mostrarPanel("agregarAnalisis");
-    }//GEN-LAST:event_btnAgregarActionPerformed
+    }//GEN-LAST:event_btnAgregarAnalisisActionPerformed
 
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+    private void btnAgregarParametroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarParametroActionPerformed
         // TODO add your handling code here:
-        frame.mostrarPanel("modificarAnalisis");
-        
-    }//GEN-LAST:event_btnModificarActionPerformed
+        frame.mostrarPanel("agregarParametros");
+    }//GEN-LAST:event_btnAgregarParametroActionPerformed
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+    private void btnAgregarRangoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarRangoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnBuscarActionPerformed
+        frame.mostrarPanel("agregarRangos");
+    }//GEN-LAST:event_btnAgregarRangoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnAgregarAnalisis;
+    private javax.swing.JButton btnAgregarParametro;
+    private javax.swing.JButton btnAgregarRango;
     private javax.swing.JButton btnAnlaisis;
-    private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnResultados;
     private javax.swing.JButton btnSolicitudes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaServiciosAnalisis;
-    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

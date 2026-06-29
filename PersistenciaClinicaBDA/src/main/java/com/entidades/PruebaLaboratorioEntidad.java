@@ -33,6 +33,10 @@ public class PruebaLaboratorioEntidad implements Serializable {
     public PruebaLaboratorioEntidad() {
     }
 
+    public PruebaLaboratorioEntidad(Timestamp fechaHoraGeneracion) {
+        this.fechaHoraGeneracion = fechaHoraGeneracion;
+    }
+
     public int getIdPrueba() {
         return idPrueba;
     }

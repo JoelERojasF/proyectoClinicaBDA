@@ -43,4 +43,14 @@ public class ServicioAnalisisBO {
             return false;
         }
     }
+    
+    public java.util.List<com.entidades.ServicioAnalisisEntidad> obtenerTodosLosAnalisis(){
+        try {
+            return analisisDAO.obtenerTodosLosAnalisis();
+        } catch (Exception e) {
+            System.out.println("Error al consultar analisis: " + e.getMessage());
+            return java.util.Collections.emptyList();
+        }
+    
+    }
 }

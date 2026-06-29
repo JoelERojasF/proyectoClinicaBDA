@@ -4,12 +4,20 @@
  */
 package presentacion;
 
+import com.entidades.MuestraEntidad;
+import com.negocioclinicabda.MuestraBO;
+import com.negocioclinicabda.ServicioAnalisisBO;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author le0jx
  */
 public class panelAgregarServicioAnalisis extends javax.swing.JPanel {
     private frmMain frame;
+    private final MuestraBO muestraBO = new MuestraBO();
+    private final ServicioAnalisisBO analisisBO = new ServicioAnalisisBO();
 
     /**
      * Creates new form panelAgregarServicioAnalisis
@@ -17,6 +25,58 @@ public class panelAgregarServicioAnalisis extends javax.swing.JPanel {
     public panelAgregarServicioAnalisis(frmMain frame) {
         initComponents();
         this.frame = frame;
+        actualizarPanel();
+    }
+    
+   public void actualizarPanel(){
+        txtNombreAnalisis.setText("");
+        txtDescripcionAnalisis.setText("");
+        comboBoxMuestra.removeAllItems();
+        
+         for (MuestraEntidad muestra : muestraBO.obtenerListaMuestras()) {
+            comboBoxMuestra.addItem(new ComboItem(muestra.getIdMuestra(), muestra.getNombre()));
+        }
+    }
+    
+    private void guardarDatos() {
+        String nombre = txtNombreAnalisis.getText();
+        String descripcion = txtNombreAnalisis.getText();
+        
+        ComboItem itemSeleccionado = (ComboItem) comboBoxMuestra.getSelectedItem();
+        
+        if (itemSeleccionado == null) {
+            JOptionPane.showMessageDialog(this, "Debe registrar una muestra primero.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int idMuestra = itemSeleccionado.getId();
+
+        boolean exito = analisisBO.registrarAnalisis(nombre, descripcion, idMuestra);
+
+        if (exito) {
+            JOptionPane.showMessageDialog(this, "¡Análisis registrado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            txtNombreAnalisis.setText("");
+            txtNombreAnalisis.setText("");
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al registrar el análisis.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private class ComboItem {
+        private int id;
+        private String nombre;
+
+        public ComboItem(int id, String nombre) {
+            this.id = id;
+            this.nombre = nombre;
+        }
+
+        public int getId() { return id; }
+
+        @Override
+        public String toString() {
+            return nombre;
+        }
     }
 
     /**
@@ -28,19 +88,113 @@ public class panelAgregarServicioAnalisis extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        txtNombreAnalisis = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtDescripcionAnalisis = new javax.swing.JTextField();
+        btnGuardar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        comboBoxMuestra = new javax.swing.JComboBox<>();
+
+        setMaximumSize(new java.awt.Dimension(638, 508));
+        setMinimumSize(new java.awt.Dimension(638, 508));
+
+        jLabel1.setText("agregar servicio de analisis");
+
+        jLabel2.setText("nombre del analisis:");
+
+        jLabel3.setText("descripcion del analisis:");
+
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("tipo de muestra:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(97, 97, 97)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnCancelar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                                .addComponent(btnGuardar))
+                            .addComponent(txtNombreAnalisis)
+                            .addComponent(txtDescripcionAnalisis)
+                            .addComponent(comboBoxMuestra, 0, 237, Short.MAX_VALUE))))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(82, 82, 82)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNombreAnalisis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtDescripcionAnalisis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(comboBoxMuestra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnGuardar))
+                .addContainerGap(267, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        frame.mostrarPanel("analisis");
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        guardarDatos();
+        frame.mostrarPanel("analisis");
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JComboBox<ComboItem> comboBoxMuestra;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JTextField txtDescripcionAnalisis;
+    private javax.swing.JTextField txtNombreAnalisis;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,6 +6,7 @@ package presentacion;
 
 import com.negocioclinicabda.ClienteBO;
 import com.negocioclinicabda.DoctorBO;
+import com.negocioclinicabda.MuestraBO;
 import java.awt.CardLayout;
 import java.sql.Date;
 import javax.swing.JPanel;
@@ -20,6 +21,16 @@ public class frmMain extends javax.swing.JFrame {
     
     private final ClienteBO clienteBO = new ClienteBO();;
     private final DoctorBO doctorBO = new DoctorBO();
+    private final MuestraBO muestraBO = new MuestraBO();
+    private final panelMenu menu = new panelMenu(this);
+    private final panelReporteResultados resultados = new panelReporteResultados(this);
+    private final panelServiciosAnalisis analisis = new panelServiciosAnalisis(this);
+    private final panelSolicitudes solicitud = new panelSolicitudes(this);
+    private final panelGeneracionReportes reportes = new panelGeneracionReportes(this);
+    private final panelAgregarServicioAnalisis agregarAnalisis = new panelAgregarServicioAnalisis(this);
+    private final panelAgregarParametros agregarParametros = new panelAgregarParametros(this);
+    private final panelAgregarRangos agregarRangos = new panelAgregarRangos(this);
+    
     
     /**
      * Creates new form frmMain
@@ -27,19 +38,9 @@ public class frmMain extends javax.swing.JFrame {
     public frmMain() {
         initComponents();
         
-        
-        setExtendedState(this.MAXIMIZED_BOTH);
-        
+                
         cardLayout = new CardLayout();
         contenedor = new JPanel(cardLayout);
-        
-        panelMenu menu = new panelMenu(this);
-        panelReporteResultados resultados = new panelReporteResultados(this);
-        panelServiciosAnalisis analisis = new panelServiciosAnalisis(this);
-        panelSolicitudes solicitud = new panelSolicitudes(this);
-        panelGeneracionReportes reportes  = new panelGeneracionReportes(this);
-        panelAgregarServicioAnalisis agregarAnalisis = new panelAgregarServicioAnalisis(this);
-        panelModificarServicioAnalisis modificarAnalisis = new panelModificarServicioAnalisis(this);
         
         contenedor.add(menu, "menu");
         contenedor.add(resultados, "resultados");
@@ -47,14 +48,22 @@ public class frmMain extends javax.swing.JFrame {
         contenedor.add(solicitud, "solicitud");
         contenedor.add(reportes, "reportes");
         contenedor.add(agregarAnalisis, "agregarAnalisis");
-        contenedor.add(modificarAnalisis, "modificarAnalisis");
+        contenedor.add(agregarParametros, "agregarParametros");
+        contenedor.add(agregarRangos, "agregarRangos");
         
         setContentPane(contenedor);
         mostrarPanel("menu");
     }
     
     public void mostrarPanel(String nombre) {
+        switch (nombre){
+            case "analisis": analisis.actualizarPanel(); break;
+            case "agregarAnalisis": agregarAnalisis.actualizarPanel(); break; 
+            case "agregarParametros": agregarParametros.actualizarPanel(); break;
+            case "agregarRangos": agregarRangos.actualizarPanel(); break;
+        }
         cardLayout.show(contenedor, nombre);
+        
     }
     
     public void cargarMasivos(){
@@ -102,6 +111,31 @@ public class frmMain extends javax.swing.JFrame {
         //10
         doctorBO.registrarDoctor("Sofía", "Jiménez", "Tapia", "Femenino", "Endocrinología", "9258714");
         
+        //muestras
+        //1
+        muestraBO.registrarMuestra("Sangre");
+        //2
+        muestraBO.registrarMuestra("Orina");
+        //3
+        muestraBO.registrarMuestra("Heces fecales");
+        //4
+        muestraBO.registrarMuestra("Saliva");
+        //5
+        muestraBO.registrarMuestra("Esputo (flema)");
+        //6
+        muestraBO.registrarMuestra("Hisopado nasal");
+        //7
+        muestraBO.registrarMuestra("Hisopado faríngeo");
+        //8
+        muestraBO.registrarMuestra("Biopsia de tejido");
+        //9
+        muestraBO.registrarMuestra("Líquido cefalorraquídeo");
+        //10
+        muestraBO.registrarMuestra("Semen");
+        //11
+        muestraBO.registrarMuestra("Cabello");
+        //12
+        muestraBO.registrarMuestra("Uñas");
     }
 
     /**
@@ -115,6 +149,9 @@ public class frmMain extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setMaximumSize(new java.awt.Dimension(638, 508));
+        setMinimumSize(new java.awt.Dimension(638, 508));
+        setPreferredSize(new java.awt.Dimension(638, 508));
         setResizable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

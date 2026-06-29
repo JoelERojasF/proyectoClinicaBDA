@@ -3,5 +3,7 @@ com\negocioclinicabda\ClienteBO.class
 com\negocioclinicabda\MuestraBO.class
 com\negocioclinicabda\ServicioAnalisisBO.class
 com\negocioclinicabda\NegocioClinicaBDA.class
+com\negocioclinicabda\PruebaLaboratorioBO.class
+com\negocioclinicabda\ResultadoBO.class
 com\negocioclinicabda\ParametroBO.class
 com\negocioclinicabda\DoctorBO.class

@@ -46,6 +46,16 @@ public class ParametroBO {
             return false;
         }
     }
+    
+    public java.util.List<com.entidades.ParametroEntidad> obtenerListaParametros() {
+        try {
+            return parametroDAO.obtenerTodosLosParametros();
+        } catch (Exception e) {
+            System.out.println("Error al consultar análisis: " + e.getMessage());
+            return java.util.Collections.emptyList();
+        }
+    }
+    
     public java.util.List<com.entidades.ServicioAnalisisEntidad> obtenerListaAnalisis() {
         try {
             return new com.persistenciaclinicabda.ServicioAnalisisDAO(conexion).obtenerTodosLosAnalisis();

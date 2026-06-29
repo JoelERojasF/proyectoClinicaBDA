@@ -4,6 +4,7 @@ com\persistenciaclinicabda\ParametroDAO.class
 com\entidades\MuestraEntidad.class
 com\persistenciaclinicabda\RangoDAO.class
 com\entidades\ServicioAnalisisEntidad.class
+com\persistenciaclinicabda\ResultadoDAO.class
 com\entidades\ClienteEntidad.class
 com\persistenciaclinicabda\ServicioAnalisisDAO.class
 com\entidades\ResultadoEntidad.class
@@ -11,6 +12,7 @@ com\persistenciaclinicabda\DoctorDAO.class
 com\persistenciaclinicabda\MuestraDAO.class
 com\persistenciaclinicabda\ClienteDAO.class
 com\persistenciaclinicabda\conexion\ConexionBD.class
+com\persistenciaclinicabda\PruebaLaboratorioDAO.class
 com\entidades\ParametroEntidad.class
 com\persistenciaclinicabda\PersistenciaClinicaBDA.class
 com\entidades\DoctorEntidad.class

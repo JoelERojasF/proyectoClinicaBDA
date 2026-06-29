@@ -22,14 +22,19 @@ public class ClienteDAO {
 
     public void guardarCliente(ClienteEntidad cliente) throws Exception {
         EntityManager em = conexionBD.crearConexion();
+        try {
             em.getTransaction().begin();
             em.persist(cliente);
             em.getTransaction().commit();
+            } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-        
-
-        
+            throw e;
+        } finally {
+            em.close();
+        }
     }
+    
+    
 }
