@@ -36,5 +36,14 @@ public class ClienteDAO {
         }
     }
     
+    public java.util.List<ClienteEntidad> obtenerTodosLosClientes() throws Exception {
+        EntityManager em = conexionBD.crearConexion();
+        try {
+            return em.createQuery("SELECT c FROM ClienteEntidad c", ClienteEntidad.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
     
 }

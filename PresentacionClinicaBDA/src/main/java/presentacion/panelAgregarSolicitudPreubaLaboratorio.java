@@ -4,17 +4,128 @@
  */
 package presentacion;
 
+import com.entidades.ClienteEntidad;
+import com.entidades.DoctorEntidad;
+import com.negocioclinicabda.ClienteBO;
+import com.negocioclinicabda.DoctorBO;
+import com.negocioclinicabda.PruebaLaboratorioBO;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author le0jx
  */
 public class panelAgregarSolicitudPreubaLaboratorio extends javax.swing.JPanel {
-
+    private frmMain frame;
+    private final ClienteBO clienteBO = new ClienteBO();
+    private final DoctorBO doctorBO = new DoctorBO();
+    private final PruebaLaboratorioBO pruebaBO = new PruebaLaboratorioBO();
+    
+    private static final String SIN_DOCTOR = "Por cuenta propia (sin doctor)";
     /**
      * Creates new form panelAgregarSolicitud
      */
-    public panelAgregarSolicitudPreubaLaboratorio() {
+    public panelAgregarSolicitudPreubaLaboratorio(frmMain frame) {
         initComponents();
+        this.frame = frame;
+        actualizarPanel();
+    }
+    
+    public void actualizarPanel() {
+        txtIdCliente.setText("");
+        txtNombreCliente.setText("");
+        txtSexoCliente.setText("");
+        txtSangreCliente.setText("");
+        txtIdDoctor.setText("");
+        txtNombreDoctor.setText("");
+        txtSexoDoctor.setText("");
+        txtEspecialidadDoctor.setText("");
+
+        comboBoxCliente.removeAllItems();
+        for (ClienteEntidad c : clienteBO.obtenerListaClientes()) {
+            comboBoxCliente.addItem(new ComboItem(c.getIdCliente(), c.getNombres() + " " + c.getApellidoPaterno()));
+        }
+
+        ComboBoxDoctor.removeAllItems();
+        ComboBoxDoctor.addItem(new ComboItem(0, SIN_DOCTOR));
+        for (DoctorEntidad d : doctorBO.obtenerListaDoctores()) {
+            ComboBoxDoctor.addItem(new ComboItem(d.getIdDoctor(), d.getNombres() + " " + d.getApellidoPaterno()));
+        }
+    }
+    
+    private void mostrarDatosCliente() {
+        ComboItem item = (ComboItem) comboBoxCliente.getSelectedItem();
+        if (item == null) {
+            return;
+        }
+
+        for (ClienteEntidad c : clienteBO.obtenerListaClientes()) {
+            if (c.getIdCliente() == item.getId()) {
+                txtIdCliente.setText(String.valueOf(c.getIdCliente()));
+                txtNombreCliente.setText(c.getNombres() + " " + c.getApellidoPaterno() + " " + c.getApellidoMaterno());
+                txtSexoCliente.setText(c.getSexo());
+                txtSangreCliente.setText(c.getTipoSangre());
+                break;
+            }
+        }
+    }
+    
+    private void mostrarDatosDoctor() {
+        ComboItem item = (ComboItem) ComboBoxDoctor.getSelectedItem();
+        if (item == null || item.getId() == 0) {
+            txtIdDoctor.setText("");
+            txtNombreDoctor.setText("");
+            txtSexoDoctor.setText("");
+            txtEspecialidadDoctor.setText("");
+            return;
+        }
+
+        for (DoctorEntidad d : doctorBO.obtenerListaDoctores()) {
+            if (d.getIdDoctor() == item.getId()) {
+                txtIdDoctor.setText(String.valueOf(d.getIdDoctor()));
+                txtNombreDoctor.setText(d.getNombres() + " " + d.getApellidoPaterno() + " " + d.getApellidoMaterno());
+                txtSexoDoctor.setText(d.getSexo());
+                txtEspecialidadDoctor.setText(d.getEspecialidad());
+                break;
+            }
+        }
+    }
+    
+    private void guardar(){
+        ComboItem itemCliente = (ComboItem) comboBoxCliente.getSelectedItem();
+        ComboItem itemDoctor = (ComboItem) ComboBoxDoctor.getSelectedItem();
+
+        if (itemCliente == null) {
+            JOptionPane.showMessageDialog(this, "Debe registrar un cliente primero.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int idCliente = itemCliente.getId();
+        int idDoctor = (itemDoctor != null) ? itemDoctor.getId() : 0;
+
+        boolean exito = pruebaBO.registrarPrueba(idCliente, idDoctor);
+
+        if (exito) {
+            JOptionPane.showMessageDialog(this, "¡Solicitud registrada exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al registrar la solicitud.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private static class ComboItem {
+        private final int id;
+        private final String nombre;
+
+        public ComboItem(int id, String nombre) {
+            this.id = id;
+            this.nombre = nombre;
+        }
+
+        public int getId() { return id; }
+
+        @Override
+        public String toString() { return nombre; }
     }
 
     /**
@@ -26,37 +137,45 @@ public class panelAgregarSolicitudPreubaLaboratorio extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboBoxCliente = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        ComboBoxDoctor = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        txtIdCliente = new javax.swing.JTextField();
+        txtNombreCliente = new javax.swing.JTextField();
+        txtSexoCliente = new javax.swing.JTextField();
+        txtSangreCliente = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        txtNombreDoctor = new javax.swing.JTextField();
+        txtIdDoctor = new javax.swing.JTextField();
+        txtSexoDoctor = new javax.swing.JTextField();
+        txtEspecialidadDoctor = new javax.swing.JTextField();
+        btnGuardar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(638, 508));
         setMinimumSize(new java.awt.Dimension(638, 508));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBoxCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxClienteActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Cliente");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ComboBoxDoctor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxDoctorActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Doctor");
 
@@ -68,13 +187,13 @@ public class panelAgregarSolicitudPreubaLaboratorio extends javax.swing.JPanel {
 
         jLabel6.setText("tipo de sangre:");
 
-        jTextField1.setEditable(false);
+        txtIdCliente.setEditable(false);
 
-        jTextField2.setEditable(false);
+        txtNombreCliente.setEditable(false);
 
-        jTextField3.setEditable(false);
+        txtSexoCliente.setEditable(false);
 
-        jTextField4.setEditable(false);
+        txtSangreCliente.setEditable(false);
 
         jLabel7.setText("id:");
 
@@ -84,25 +203,25 @@ public class panelAgregarSolicitudPreubaLaboratorio extends javax.swing.JPanel {
 
         jLabel10.setText("especialidad:");
 
-        jTextField5.setEditable(false);
+        txtNombreDoctor.setEditable(false);
 
-        jTextField6.setEditable(false);
+        txtIdDoctor.setEditable(false);
 
-        jTextField7.setEditable(false);
+        txtSexoDoctor.setEditable(false);
 
-        jTextField8.setEditable(false);
+        txtEspecialidadDoctor.setEditable(false);
 
-        jButton1.setText("Guardar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -119,7 +238,7 @@ public class panelAgregarSolicitudPreubaLaboratorio extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(82, 82, 82)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -128,15 +247,15 @@ public class panelAgregarSolicitudPreubaLaboratorio extends javax.swing.JPanel {
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
+                            .addComponent(btnCancelar)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTextField1)
-                                .addComponent(jTextField2)
-                                .addComponent(jTextField3)
-                                .addComponent(jTextField4)))))
+                                .addComponent(txtIdCliente)
+                                .addComponent(txtNombreCliente)
+                                .addComponent(txtSexoCliente)
+                                .addComponent(txtSangreCliente)))))
                 .addGap(86, 86, 86)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBoxDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel9)
@@ -146,12 +265,12 @@ public class panelAgregarSolicitudPreubaLaboratorio extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
+                                .addComponent(btnGuardar)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jTextField7, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(txtSexoDoctor, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtEspecialidadDoctor, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtNombreDoctor, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtIdDoctor, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addGap(82, 82, 82))
         );
         layout.setVerticalGroup(
@@ -163,55 +282,68 @@ public class panelAgregarSolicitudPreubaLaboratorio extends javax.swing.JPanel {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBoxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBoxDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel7)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtIdDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombreDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSexoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSexoDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSangreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEspecialidadDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnGuardar)
+                    .addComponent(btnCancelar))
                 .addContainerGap(242, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        frame.mostrarPanel("solicitud");
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        guardar();
+        frame.mostrarPanel("solicitud");
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void ComboBoxDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxDoctorActionPerformed
+        // TODO add your handling code here:
+        mostrarDatosDoctor();
+    }//GEN-LAST:event_ComboBoxDoctorActionPerformed
+
+    private void comboBoxClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxClienteActionPerformed
+        // TODO add your handling code here:
+        mostrarDatosCliente();
+    }//GEN-LAST:event_comboBoxClienteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<ComboItem> ComboBoxDoctor;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JComboBox<ComboItem> comboBoxCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -222,13 +354,13 @@ public class panelAgregarSolicitudPreubaLaboratorio extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField txtEspecialidadDoctor;
+    private javax.swing.JTextField txtIdCliente;
+    private javax.swing.JTextField txtIdDoctor;
+    private javax.swing.JTextField txtNombreCliente;
+    private javax.swing.JTextField txtNombreDoctor;
+    private javax.swing.JTextField txtSangreCliente;
+    private javax.swing.JTextField txtSexoCliente;
+    private javax.swing.JTextField txtSexoDoctor;
     // End of variables declaration//GEN-END:variables
 }

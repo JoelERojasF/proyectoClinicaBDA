@@ -26,6 +26,7 @@ public class frmMain extends javax.swing.JFrame {
     private final panelReporteResultados resultados = new panelReporteResultados(this);
     private final panelServiciosAnalisis analisis = new panelServiciosAnalisis(this);
     private final panelSolicitudes solicitud = new panelSolicitudes(this);
+    private final panelAgregarSolicitudPreubaLaboratorio agregarSolicitud = new panelAgregarSolicitudPreubaLaboratorio(this);
     private final panelGeneracionReportes reportes = new panelGeneracionReportes(this);
     private final panelAgregarServicioAnalisis agregarAnalisis = new panelAgregarServicioAnalisis(this);
     private final panelAgregarParametros agregarParametros = new panelAgregarParametros(this);
@@ -50,6 +51,7 @@ public class frmMain extends javax.swing.JFrame {
         contenedor.add(agregarAnalisis, "agregarAnalisis");
         contenedor.add(agregarParametros, "agregarParametros");
         contenedor.add(agregarRangos, "agregarRangos");
+        contenedor.add(agregarSolicitud, "agregarSolicitud");
         
         setContentPane(contenedor);
         mostrarPanel("menu");
@@ -61,6 +63,8 @@ public class frmMain extends javax.swing.JFrame {
             case "agregarAnalisis": agregarAnalisis.actualizarPanel(); break; 
             case "agregarParametros": agregarParametros.actualizarPanel(); break;
             case "agregarRangos": agregarRangos.actualizarPanel(); break;
+            case "solicitud": solicitud.actualizarPanel();
+            case "agregarSolicitud": agregarSolicitud.actualizarPanel(); break;
         }
         cardLayout.show(contenedor, nombre);
         

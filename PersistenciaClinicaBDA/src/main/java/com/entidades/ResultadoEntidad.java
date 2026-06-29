@@ -18,7 +18,7 @@ public class ResultadoEntidad implements Serializable {
     @Column(name = "id_resultado")
     private int idResult;
 
-    @Column(name = "valor_resultado", nullable = false, precision = 10, scale = 2)
+    @Column(name = "valor_resultado", precision = 10, scale = 2)
     private double valorResultado;
 
     @Column(name = "observacion", columnDefinition = "TEXT")

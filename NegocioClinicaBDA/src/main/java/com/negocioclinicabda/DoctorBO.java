@@ -43,4 +43,13 @@ public class DoctorBO {
             return false;
         }
     }
+    
+    public java.util.List<com.entidades.DoctorEntidad> obtenerListaDoctores() {
+        try {
+            return doctorDAO.obtenerTodosLosDoctores();
+        } catch (Exception e) {
+            System.out.println("Error al consultar doctores: " + e.getMessage());
+            return java.util.Collections.emptyList();
+        }
+    }
 }

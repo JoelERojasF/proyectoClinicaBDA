@@ -35,4 +35,13 @@ public class DoctorDAO {
             em.close();
         }
     }
+    
+    public java.util.List<DoctorEntidad> obtenerTodosLosDoctores() throws Exception {
+        EntityManager em = conexionBD.crearConexion();
+        try {
+            return em.createQuery("SELECT d FROM DoctorEntidad d", DoctorEntidad.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
 }

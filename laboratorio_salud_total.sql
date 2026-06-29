@@ -1,0 +1,2 @@
+CREATE DATABASE laboratorio_salud_total;
+USE laboratorio_salud_total;

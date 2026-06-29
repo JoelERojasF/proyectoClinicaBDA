@@ -33,7 +33,6 @@ public class panelReporteResultados extends javax.swing.JPanel {
         btnAnlaisis = new javax.swing.JButton();
         btnResultados = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
-        btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         txtBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
@@ -73,13 +72,6 @@ public class panelReporteResultados extends javax.swing.JPanel {
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
-            }
-        });
-
-        btnModificar.setText("modificar");
-        btnModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarActionPerformed(evt);
             }
         });
 
@@ -140,9 +132,7 @@ public class panelReporteResultados extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addComponent(btnEliminar)
-                                .addGap(231, 231, 231)
-                                .addComponent(btnModificar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(318, 318, 318)
                                 .addComponent(btnAgregar))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(13, 13, 13)
@@ -175,9 +165,7 @@ public class panelReporteResultados extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnEliminar)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnModificar)
-                                .addComponent(btnAgregar)))))
+                            .addComponent(btnAgregar))))
                 .addContainerGap(79, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -199,14 +187,7 @@ public class panelReporteResultados extends javax.swing.JPanel {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        frame.mostrarPanel("agregarAnalisis");
     }//GEN-LAST:event_btnAgregarActionPerformed
-
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
-        frame.mostrarPanel("modificarAnalisis");
-
-    }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
@@ -222,7 +203,6 @@ public class panelReporteResultados extends javax.swing.JPanel {
     private javax.swing.JButton btnAnlaisis;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnResultados;
     private javax.swing.JButton btnSolicitudes;
     private javax.swing.JLabel jLabel1;

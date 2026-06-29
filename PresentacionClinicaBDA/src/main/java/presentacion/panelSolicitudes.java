@@ -4,18 +4,46 @@
  */
 package presentacion;
 
+import com.entidades.PruebaLaboratorioEntidad;
+import com.negocioclinicabda.PruebaLaboratorioBO;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author le0jx
  */
 public class panelSolicitudes extends javax.swing.JPanel {
     private frmMain frame;
+    private final PruebaLaboratorioBO pruebaBO = new PruebaLaboratorioBO();
     /**
      * Creates new form panelSolicitudes
      */
     public panelSolicitudes(frmMain frame) {
         initComponents();
         this.frame = frame;
+        actualizarPanel();
+    }
+    
+    public void actualizarPanel(){
+        DefaultTableModel modelo = (DefaultTableModel) tablaServiciosAnalisis.getModel();
+        modelo.setRowCount(0);
+
+        List<PruebaLaboratorioEntidad> lista = pruebaBO.obtenerTodasPruebas();
+        for (PruebaLaboratorioEntidad prueba : lista) {
+            String paciente = prueba.getCliente().getNombres() + " " + prueba.getCliente().getApellidoPaterno();
+            String medico = (prueba.getDoctor() != null)
+                    ? prueba.getDoctor().getNombres() + " " + prueba.getDoctor().getApellidoPaterno()
+                    : "Por cuenta propia";
+
+            Object[] fila = {
+                prueba.getIdPrueba(),
+                prueba.getFechaHoraGeneracion(),
+                paciente,
+                medico
+            };
+            modelo.addRow(fila);
+        }
     }
 
     /**
@@ -38,7 +66,7 @@ public class panelSolicitudes extends javax.swing.JPanel {
         setMaximumSize(new java.awt.Dimension(638, 508));
         setMinimumSize(new java.awt.Dimension(638, 508));
 
-        jLabel1.setText("solicitudes");
+        jLabel1.setText("registro solicitudes");
 
         btnSolicitudes.setText("solicitudes");
         btnSolicitudes.setEnabled(false);
@@ -156,7 +184,7 @@ public class panelSolicitudes extends javax.swing.JPanel {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        frame.mostrarPanel("agregarAnalisis");
+        frame.mostrarPanel("agregarSolicitud");
     }//GEN-LAST:event_btnAgregarActionPerformed
 
 

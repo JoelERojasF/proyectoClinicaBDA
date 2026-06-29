@@ -77,7 +77,7 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="solicitudes"/>
+        <Property name="text" type="java.lang.String" value="registro solicitudes"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnSolicitudes">

@@ -18,7 +18,7 @@ public class ServicioAnalisisDAO {
     
     private final IConexionBD conexionBD;
 
-    public java.util.List<ServicioAnalisisEntidad> obtenerTodosLosAnalisis;
+    public java.util.List<ServicioAnalisisEntidad> listaAnalisis;
 
     public ServicioAnalisisDAO(IConexionBD conexionBD) {
         this.conexionBD = conexionBD;
@@ -41,24 +41,6 @@ public class ServicioAnalisisDAO {
         } finally {
             em.close();
         }
-    }
-    
-    public ServicioAnalisisEntidad actualizarAnalisis(int id, String nombre, String descripcion, int idMuestra) throws SQLException{
-        EntityManager em = conexionBD.crearConexion();
-         try {
-            em.getTransaction().begin();
-            //pendiente
- 
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw e;
-        } finally {
-            em.close();
-        }
-         return null;
     }
     
     public java.util.List<com.entidades.ServicioAnalisisEntidad> obtenerTodosLosAnalisis() throws Exception {

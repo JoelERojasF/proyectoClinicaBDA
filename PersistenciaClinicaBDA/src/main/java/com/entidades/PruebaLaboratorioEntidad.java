@@ -19,8 +19,8 @@ public class PruebaLaboratorioEntidad implements Serializable {
     @Column(name = "id_prueba")
     private int idPrueba;
 
-    @Column(name = "fecha_hora_generacion", insertable = false, updatable = false)
-    private Timestamp fechaHoraGeneracion;
+    @Column(name = "fecha_hora_generacion", nullable = false)
+private Timestamp fechaHoraGeneracion;
 
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false)

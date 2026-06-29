@@ -23,19 +23,25 @@ public class PruebaLaboratorioBO {
     }
     
     
-    public boolean registrarPrueba(Timestamp fechaHora, int Idcliente, int IdDoctor) {
-        
-        PruebaLaboratorioEntidad prueba = new PruebaLaboratorioEntidad(fechaHora);
+    public boolean registrarPrueba(int idCliente, int idDoctor) {
 
-        try{
-            pruebaDAO.guardarPruebaLaboratorio(prueba, Idcliente, IdDoctor);
-            System.out.println("Éxito: Análisis guardado correctamente con JPA.");
-            return true;  
-         } catch (Exception e) {
-            System.out.println("Error en BD al guardar prueba de laboratorio con JPA: " + e.getMessage());
-            return false;
-        }
+    if (idCliente <= 0) {
+        System.out.println("Error: Debe seleccionar un cliente válido.");
+        return false;
     }
+
+    Timestamp fechaHora = new Timestamp(System.currentTimeMillis());
+    PruebaLaboratorioEntidad prueba = new PruebaLaboratorioEntidad(fechaHora);
+
+    try{
+        pruebaDAO.guardarPruebaLaboratorio(prueba, idCliente, idDoctor);
+        System.out.println("Éxito: Prueba de laboratorio registrada correctamente con JPA.");
+        return true;  
+     } catch (Exception e) {
+        System.out.println("Error en BD al guardar prueba de laboratorio con JPA: " + e.getMessage());
+        return false;
+    }
+}
     
     public java.util.List<com.entidades.PruebaLaboratorioEntidad> obtenerTodasPruebas(){
         try {
