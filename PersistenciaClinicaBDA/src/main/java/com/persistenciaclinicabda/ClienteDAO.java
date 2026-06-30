@@ -4,23 +4,23 @@
  */
 package com.persistenciaclinicabda;
 import com.entidades.ClienteEntidad;
+import com.persistenciaclinicabda.conexion.IConexionBD;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
+import java.util.List;
 /**
  *
  * @author oscar
  */
 public class ClienteDAO {
     
-    private EntityManagerFactory emf;
+    private final IConexionBD conexionBD;
 
-    public ClienteDAO() {
-        this.emf = Persistence.createEntityManagerFactory("ClinicaPU");
+    public ClienteDAO(IConexionBD conexionBD) {
+        this.conexionBD = conexionBD;
     }
 
     public void guardarCliente(ClienteEntidad cliente) throws Exception {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = conexionBD.crearConexion();
         try {
             em.getTransaction().begin();
             em.persist(cliente);
@@ -30,6 +30,40 @@ public class ClienteDAO {
                 em.getTransaction().rollback();
             }
             throw e;
+        } finally {
+            em.close();
+        }
+    }
+    
+    public void actualizarCliente(ClienteEntidad cliente) throws Exception {
+    EntityManager em = conexionBD.crearConexion();
+    try {
+        em.getTransaction().begin();
+        em.merge(cliente);
+        em.getTransaction().commit();
+    } finally {
+        em.close();
+    }
+}
+
+public void eliminarCliente(int idCliente) throws Exception {
+    EntityManager em = conexionBD.crearConexion();
+    try {
+        em.getTransaction().begin();
+        ClienteEntidad cliente = em.find(ClienteEntidad.class, idCliente);
+        if (cliente != null) {
+            em.remove(cliente);
+        }
+        em.getTransaction().commit();
+    } finally {
+        em.close();
+    }
+}
+    
+    public List<ClienteEntidad> obtenerTodosLosClientes() throws Exception {
+        EntityManager em = conexionBD.crearConexion();
+        try {
+            return em.createQuery("SELECT c FROM ClienteEntidad c", ClienteEntidad.class).getResultList();
         } finally {
             em.close();
         }

@@ -4,13 +4,14 @@
  */
 package com.entidades;
 import jakarta.persistence.*;
+import java.io.Serializable;
 /**
  *
  * @author OscaR
  */
 @Entity
 @Table(name = "tipos_muestra")
-public class MuestraEntidad {
+public class MuestraEntidad implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -5,6 +5,8 @@
 package com.negocioclinicabda;
 import com.entidades.ClienteEntidad;
 import com.persistenciaclinicabda.ClienteDAO;
+import com.persistenciaclinicabda.conexion.ConexionBD;
+import com.persistenciaclinicabda.conexion.IConexionBD;
 import java.sql.Date;
 /**
  *
@@ -13,9 +15,11 @@ import java.sql.Date;
 public class ClienteBO {
     
     private ClienteDAO clienteDAO;
+    IConexionBD conexion = new ConexionBD();
+
 
     public ClienteBO() {
-        this.clienteDAO = new ClienteDAO();
+        this.clienteDAO = new ClienteDAO(conexion);
     }
 
     public boolean registrarCliente(String nombres, String apellidoPaterno, String apellidoMaterno, Date fechaNacimiento, String sexo, String tipoSangre) {
@@ -36,4 +40,14 @@ public class ClienteBO {
             return false;
         }
     }
+    
+    public java.util.List<com.entidades.ClienteEntidad> obtenerListaClientes() {
+        try {
+            return clienteDAO.obtenerTodosLosClientes();
+        } catch (Exception e) {
+            System.out.println("Error al consultar clientes: " + e.getMessage());
+            return java.util.Collections.emptyList();
+        }
+    }
+    
 }

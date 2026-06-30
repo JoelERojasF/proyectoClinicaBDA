@@ -5,6 +5,8 @@
 package com.negocioclinicabda;
 import com.entidades.DoctorEntidad;
 import com.persistenciaclinicabda.DoctorDAO;
+import com.persistenciaclinicabda.conexion.ConexionBD;
+import com.persistenciaclinicabda.conexion.IConexionBD;
 /**
  *
  * @author oscar
@@ -12,9 +14,11 @@ import com.persistenciaclinicabda.DoctorDAO;
 public class DoctorBO {
     
     private DoctorDAO doctorDAO;
+    IConexionBD conexion = new ConexionBD();
+
 
     public DoctorBO() {
-        this.doctorDAO = new DoctorDAO();
+        this.doctorDAO = new DoctorDAO(conexion);
     }
 
     public boolean registrarDoctor(String nombres, String apellidoPaterno, String apellidoMaterno, String sexo, String especialidad, String cedula) {
@@ -37,6 +41,15 @@ public class DoctorBO {
         } catch (Exception e) {
             System.out.println("Error en BD al guardar médico con JPA: " + e.getMessage());
             return false;
+        }
+    }
+    
+    public java.util.List<com.entidades.DoctorEntidad> obtenerListaDoctores() {
+        try {
+            return doctorDAO.obtenerTodosLosDoctores();
+        } catch (Exception e) {
+            System.out.println("Error al consultar doctores: " + e.getMessage());
+            return java.util.Collections.emptyList();
         }
     }
 }

@@ -5,25 +5,27 @@
 package com.persistenciaclinicabda;
 import com.entidades.MuestraEntidad;
 import com.entidades.ServicioAnalisisEntidad;
+import com.persistenciaclinicabda.conexion.IConexionBD;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import java.sql.SQLException;
 /**
  *
  * @author oscar
  */
 public class ServicioAnalisisDAO {
     
-    private EntityManagerFactory emf;
+    private final IConexionBD conexionBD;
 
-    public java.util.List<ServicioAnalisisEntidad> obtenerTodosLosAnalisis;
+    public java.util.List<ServicioAnalisisEntidad> listaAnalisis;
 
-    public ServicioAnalisisDAO() {
-        this.emf = Persistence.createEntityManagerFactory("ClinicaPU");
+    public ServicioAnalisisDAO(IConexionBD conexionBD) {
+        this.conexionBD = conexionBD;
     }
 
     public void guardarAnalisis(ServicioAnalisisEntidad analisis, int idMuestra) throws Exception {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = conexionBD.crearConexion();
         try {
             em.getTransaction().begin();
             
@@ -40,10 +42,11 @@ public class ServicioAnalisisDAO {
             em.close();
         }
     }
+    
     public java.util.List<com.entidades.ServicioAnalisisEntidad> obtenerTodosLosAnalisis() throws Exception {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = conexionBD.crearConexion();
         try {
-            return em.createQuery("SELECT a FROM ServicioAnalisisEntidad a", com.entidades.ServicioAnalisisEntidad.class).getResultList();
+            return em.createQuery("SELECT a FROM ServicioAnalisisEntidad a", ServicioAnalisisEntidad.class).getResultList();
         } finally {
             em.close();
         }

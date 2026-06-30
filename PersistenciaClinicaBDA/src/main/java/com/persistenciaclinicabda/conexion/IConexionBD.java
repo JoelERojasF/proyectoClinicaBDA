@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package com.persistenciaclinicabda.conexion;
+import jakarta.persistence.EntityManager;
 import java.sql.Connection;
 import java.sql.SQLException;
 /**
@@ -10,5 +11,5 @@ import java.sql.SQLException;
  * @author oscar
  */
 public interface IConexionBD {
- Connection crearConexion() throws SQLException;
+ EntityManager crearConexion() throws SQLException;
 }

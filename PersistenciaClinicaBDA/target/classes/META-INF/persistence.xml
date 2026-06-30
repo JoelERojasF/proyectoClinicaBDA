@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence" 
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
-  
+<persistence version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
   <persistence-unit name="ClinicaPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    
     <class>com.entidades.MuestraEntidad</class>
     <class>com.entidades.ServicioAnalisisEntidad</class>
     <class>com.entidades.MuestraEntidad</class>
@@ -34,15 +30,14 @@
     <class>com.entidades.ClienteEntidad</class>
     <class>com.entidades.PruebaLaboratorioEntidad</class>
     <class>com.entidades.ResultadoEntidad</class>
-
     <properties>
-      <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/laboratorio_salud_total?useSSL=false&amp;serverTimezone=UTC"/>
+      <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/laboratorio_salud_total"/>
       <property name="jakarta.persistence.jdbc.user" value="root"/>
-      <property name="jakarta.persistence.jdbc.password" value="OSKI"/> 
+      <property name="jakarta.persistence.jdbc.password" value="OSKI"/>
       <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-      
       <property name="eclipselink.logging.level" value="FINE"/>
       <property name="eclipselink.target-database" value="MySQL"/>
+      <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
     </properties>
   </persistence-unit>
 </persistence>

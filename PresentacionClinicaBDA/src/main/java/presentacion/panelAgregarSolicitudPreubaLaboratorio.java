@@ -1,0 +1,366 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ */
+package presentacion;
+
+import com.entidades.ClienteEntidad;
+import com.entidades.DoctorEntidad;
+import com.negocioclinicabda.ClienteBO;
+import com.negocioclinicabda.DoctorBO;
+import com.negocioclinicabda.PruebaLaboratorioBO;
+import java.util.List;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author le0jx
+ */
+public class panelAgregarSolicitudPreubaLaboratorio extends javax.swing.JPanel {
+    private frmMain frame;
+    private final ClienteBO clienteBO = new ClienteBO();
+    private final DoctorBO doctorBO = new DoctorBO();
+    private final PruebaLaboratorioBO pruebaBO = new PruebaLaboratorioBO();
+    
+    private static final String SIN_DOCTOR = "Por cuenta propia (sin doctor)";
+    /**
+     * Creates new form panelAgregarSolicitud
+     */
+    public panelAgregarSolicitudPreubaLaboratorio(frmMain frame) {
+        initComponents();
+        this.frame = frame;
+        actualizarPanel();
+    }
+    
+    public void actualizarPanel() {
+        txtIdCliente.setText("");
+        txtNombreCliente.setText("");
+        txtSexoCliente.setText("");
+        txtSangreCliente.setText("");
+        txtIdDoctor.setText("");
+        txtNombreDoctor.setText("");
+        txtSexoDoctor.setText("");
+        txtEspecialidadDoctor.setText("");
+
+        comboBoxCliente.removeAllItems();
+        for (ClienteEntidad c : clienteBO.obtenerListaClientes()) {
+            comboBoxCliente.addItem(new ComboItem(c.getIdCliente(), c.getNombres() + " " + c.getApellidoPaterno()));
+        }
+
+        ComboBoxDoctor.removeAllItems();
+        ComboBoxDoctor.addItem(new ComboItem(0, SIN_DOCTOR));
+        for (DoctorEntidad d : doctorBO.obtenerListaDoctores()) {
+            ComboBoxDoctor.addItem(new ComboItem(d.getIdDoctor(), d.getNombres() + " " + d.getApellidoPaterno()));
+        }
+    }
+    
+    private void mostrarDatosCliente() {
+        ComboItem item = (ComboItem) comboBoxCliente.getSelectedItem();
+        if (item == null) {
+            return;
+        }
+
+        for (ClienteEntidad c : clienteBO.obtenerListaClientes()) {
+            if (c.getIdCliente() == item.getId()) {
+                txtIdCliente.setText(String.valueOf(c.getIdCliente()));
+                txtNombreCliente.setText(c.getNombres() + " " + c.getApellidoPaterno() + " " + c.getApellidoMaterno());
+                txtSexoCliente.setText(c.getSexo());
+                txtSangreCliente.setText(c.getTipoSangre());
+                break;
+            }
+        }
+    }
+    
+    private void mostrarDatosDoctor() {
+        ComboItem item = (ComboItem) ComboBoxDoctor.getSelectedItem();
+        if (item == null || item.getId() == 0) {
+            txtIdDoctor.setText("");
+            txtNombreDoctor.setText("");
+            txtSexoDoctor.setText("");
+            txtEspecialidadDoctor.setText("");
+            return;
+        }
+
+        for (DoctorEntidad d : doctorBO.obtenerListaDoctores()) {
+            if (d.getIdDoctor() == item.getId()) {
+                txtIdDoctor.setText(String.valueOf(d.getIdDoctor()));
+                txtNombreDoctor.setText(d.getNombres() + " " + d.getApellidoPaterno() + " " + d.getApellidoMaterno());
+                txtSexoDoctor.setText(d.getSexo());
+                txtEspecialidadDoctor.setText(d.getEspecialidad());
+                break;
+            }
+        }
+    }
+    
+    private void guardar(){
+        ComboItem itemCliente = (ComboItem) comboBoxCliente.getSelectedItem();
+        ComboItem itemDoctor = (ComboItem) ComboBoxDoctor.getSelectedItem();
+
+        if (itemCliente == null) {
+            JOptionPane.showMessageDialog(this, "Debe registrar un cliente primero.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int idCliente = itemCliente.getId();
+        int idDoctor = (itemDoctor != null) ? itemDoctor.getId() : 0;
+
+        boolean exito = pruebaBO.registrarPrueba(idCliente, idDoctor);
+
+        if (exito) {
+            JOptionPane.showMessageDialog(this, "¡Solicitud registrada exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al registrar la solicitud.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private static class ComboItem {
+        private final int id;
+        private final String nombre;
+
+        public ComboItem(int id, String nombre) {
+            this.id = id;
+            this.nombre = nombre;
+        }
+
+        public int getId() { return id; }
+
+        @Override
+        public String toString() { return nombre; }
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        comboBoxCliente = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        ComboBoxDoctor = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        txtIdCliente = new javax.swing.JTextField();
+        txtNombreCliente = new javax.swing.JTextField();
+        txtSexoCliente = new javax.swing.JTextField();
+        txtSangreCliente = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        txtNombreDoctor = new javax.swing.JTextField();
+        txtIdDoctor = new javax.swing.JTextField();
+        txtSexoDoctor = new javax.swing.JTextField();
+        txtEspecialidadDoctor = new javax.swing.JTextField();
+        btnGuardar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+
+        setMaximumSize(new java.awt.Dimension(638, 508));
+        setMinimumSize(new java.awt.Dimension(638, 508));
+
+        comboBoxCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxClienteActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Cliente");
+
+        ComboBoxDoctor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxDoctorActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Doctor");
+
+        jLabel3.setText("id:");
+
+        jLabel4.setText("Nombre:");
+
+        jLabel5.setText("sexo:");
+
+        jLabel6.setText("tipo de sangre:");
+
+        txtIdCliente.setEditable(false);
+
+        txtNombreCliente.setEditable(false);
+
+        txtSexoCliente.setEditable(false);
+
+        txtSangreCliente.setEditable(false);
+
+        jLabel7.setText("id:");
+
+        jLabel8.setText("nombre:");
+
+        jLabel9.setText("sexo:");
+
+        jLabel10.setText("especialidad:");
+
+        txtNombreDoctor.setEditable(false);
+
+        txtIdDoctor.setEditable(false);
+
+        txtSexoDoctor.setEditable(false);
+
+        txtEspecialidadDoctor.setEditable(false);
+
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(152, 152, 152)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(154, 154, 154))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(82, 82, 82)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(comboBoxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnCancelar)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtIdCliente)
+                                .addComponent(txtNombreCliente)
+                                .addComponent(txtSexoCliente)
+                                .addComponent(txtSangreCliente)))))
+                .addGap(86, 86, 86)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(ComboBoxDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnGuardar)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtSexoDoctor, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtEspecialidadDoctor, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtNombreDoctor, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtIdDoctor, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addGap(82, 82, 82))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboBoxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBoxDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7)
+                        .addComponent(txtIdDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(5, 5, 5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtNombreDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtSexoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(txtSexoDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtSangreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
+                    .addComponent(txtEspecialidadDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar)
+                    .addComponent(btnCancelar))
+                .addContainerGap(242, Short.MAX_VALUE))
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        frame.mostrarPanel("solicitud");
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        guardar();
+        frame.mostrarPanel("solicitud");
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void ComboBoxDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxDoctorActionPerformed
+        // TODO add your handling code here:
+        mostrarDatosDoctor();
+    }//GEN-LAST:event_ComboBoxDoctorActionPerformed
+
+    private void comboBoxClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxClienteActionPerformed
+        // TODO add your handling code here:
+        mostrarDatosCliente();
+    }//GEN-LAST:event_comboBoxClienteActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<ComboItem> ComboBoxDoctor;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JComboBox<ComboItem> comboBoxCliente;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JTextField txtEspecialidadDoctor;
+    private javax.swing.JTextField txtIdCliente;
+    private javax.swing.JTextField txtIdDoctor;
+    private javax.swing.JTextField txtNombreCliente;
+    private javax.swing.JTextField txtNombreDoctor;
+    private javax.swing.JTextField txtSangreCliente;
+    private javax.swing.JTextField txtSexoCliente;
+    private javax.swing.JTextField txtSexoDoctor;
+    // End of variables declaration//GEN-END:variables
+}

@@ -17,7 +17,11 @@
             <artifactId>NegocioClinicaBDA</artifactId>
             <version>${project.version}</version>
         </dependency>
-        
+        <dependency>
+    <groupId>com.232979</groupId>
+    <artifactId>NegocioClinicaBDA</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
     </dependencies>
     
 </project>

@@ -4,20 +4,21 @@
  */
 package com.entidades;
 import jakarta.persistence.*;
+import java.io.Serializable;
 /**
  *
  * @author Oscar
  */
 @Entity
 @Table(name = "resultados")
-public class ResultadoEntidad {
+public class ResultadoEntidad implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_resultado")
     private int idResult;
 
-    @Column(name = "valor_resultado", nullable = false, precision = 10, scale = 2)
+    @Column(name = "valor_resultado", precision = 10, scale = 2)
     private double valorResultado;
 
     @Column(name = "observacion", columnDefinition = "TEXT")

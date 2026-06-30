@@ -5,6 +5,8 @@
 package com.negocioclinicabda;
 import com.entidades.MuestraEntidad;
 import com.persistenciaclinicabda.MuestraDAO;
+import com.persistenciaclinicabda.conexion.ConexionBD;
+import com.persistenciaclinicabda.conexion.IConexionBD;
 /**
  *
  * @author oscar
@@ -12,9 +14,11 @@ import com.persistenciaclinicabda.MuestraDAO;
 public class MuestraBO {
     
     private MuestraDAO muestraDAO;
+    IConexionBD conexion = new ConexionBD();
+
 
     public MuestraBO() {
-        this.muestraDAO = new MuestraDAO();
+        this.muestraDAO = new MuestraDAO(conexion);
     }
 
     public boolean registrarMuestra(String nombre) {
@@ -34,6 +38,12 @@ public class MuestraBO {
             return false;
         }
     }
+    
+    public MuestraEntidad buscarEntidad(){
+    
+        return null;
+    }
+    
     public java.util.List<com.entidades.MuestraEntidad> obtenerListaMuestras() {
         try {
             return muestraDAO.obtenerTodasLasMuestras();

@@ -5,6 +5,8 @@
 package com.negocioclinicabda;
 import com.entidades.ParametroEntidad;
 import com.persistenciaclinicabda.ParametroDAO;
+import com.persistenciaclinicabda.conexion.ConexionBD;
+import com.persistenciaclinicabda.conexion.IConexionBD;
 /**
  *
  * @author oscar
@@ -12,9 +14,10 @@ import com.persistenciaclinicabda.ParametroDAO;
 public class ParametroBO {
     
     private ParametroDAO parametroDAO;
+    IConexionBD conexion = new ConexionBD();
 
     public ParametroBO() {
-        this.parametroDAO = new ParametroDAO();
+        this.parametroDAO = new ParametroDAO(conexion);
     }
 
     public boolean registrarParametro(String nombre, int ordenAparicion, String descripcion, String unidadMedida, int idAnalisis) {
@@ -43,9 +46,19 @@ public class ParametroBO {
             return false;
         }
     }
+    
+    public java.util.List<com.entidades.ParametroEntidad> obtenerListaParametros() {
+        try {
+            return parametroDAO.obtenerTodosLosParametros();
+        } catch (Exception e) {
+            System.out.println("Error al consultar parámetros: " + e.getMessage());
+            return java.util.Collections.emptyList();
+        }
+    }
+    
     public java.util.List<com.entidades.ServicioAnalisisEntidad> obtenerListaAnalisis() {
         try {
-            return new com.persistenciaclinicabda.ServicioAnalisisDAO().obtenerTodosLosAnalisis();
+            return new com.persistenciaclinicabda.ServicioAnalisisDAO(conexion).obtenerTodosLosAnalisis();
         } catch (Exception e) {
             System.out.println("Error al consultar análisis: " + e.getMessage());
             return java.util.Collections.emptyList();

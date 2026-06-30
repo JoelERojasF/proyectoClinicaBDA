@@ -4,13 +4,14 @@
  */
 package com.entidades;
 import jakarta.persistence.*;
+import java.io.Serializable;
 /**
  *
  * @author Oscar
  */
 @Entity
 @Table(name = "rangos_evaluacion")
-public class RangoEntidad {
+public class RangoEntidad implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

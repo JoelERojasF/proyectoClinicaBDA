@@ -1,0 +1,215 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package presentacion;
+
+import com.negocioclinicabda.ClienteBO;
+import com.negocioclinicabda.DoctorBO;
+import com.negocioclinicabda.MuestraBO;
+import java.awt.CardLayout;
+import java.sql.Date;
+import javax.swing.JPanel;
+
+/**
+ *
+ * @author le0jx
+ */
+public class frmMain extends javax.swing.JFrame {
+    private CardLayout cardLayout;
+    private JPanel contenedor;
+    
+    private final ClienteBO clienteBO = new ClienteBO();;
+    private final DoctorBO doctorBO = new DoctorBO();
+    private final MuestraBO muestraBO = new MuestraBO();
+    private final panelMenu menu = new panelMenu(this);
+    private final panelReporteResultados resultados = new panelReporteResultados(this);
+    private final panelServiciosAnalisis analisis = new panelServiciosAnalisis(this);
+    private final panelSolicitudes solicitud = new panelSolicitudes(this);
+    private final panelAgregarSolicitudPreubaLaboratorio agregarSolicitud = new panelAgregarSolicitudPreubaLaboratorio(this);
+    private final panelGeneracionReportes reportes = new panelGeneracionReportes(this);
+    private final panelAgregarServicioAnalisis agregarAnalisis = new panelAgregarServicioAnalisis(this);
+    private final panelAgregarParametros agregarParametros = new panelAgregarParametros(this);
+    private final panelAgregarRangos agregarRangos = new panelAgregarRangos(this);
+    
+    
+    /**
+     * Creates new form frmMain
+     */
+    public frmMain() {
+        initComponents();
+        
+                
+        cardLayout = new CardLayout();
+        contenedor = new JPanel(cardLayout);
+        
+        contenedor.add(menu, "menu");
+        contenedor.add(resultados, "resultados");
+        contenedor.add(analisis, "analisis");
+        contenedor.add(solicitud, "solicitud");
+        contenedor.add(reportes, "reportes");
+        contenedor.add(agregarAnalisis, "agregarAnalisis");
+        contenedor.add(agregarParametros, "agregarParametros");
+        contenedor.add(agregarRangos, "agregarRangos");
+        contenedor.add(agregarSolicitud, "agregarSolicitud");
+        
+        setContentPane(contenedor);
+        mostrarPanel("menu");
+    }
+    
+    public void mostrarPanel(String nombre) {
+        switch (nombre){
+            case "analisis": analisis.actualizarPanel(); break;
+            case "agregarAnalisis": agregarAnalisis.actualizarPanel(); break; 
+            case "agregarParametros": agregarParametros.actualizarPanel(); break;
+            case "agregarRangos": agregarRangos.actualizarPanel(); break;
+            case "solicitud": solicitud.actualizarPanel();
+            case "agregarSolicitud": agregarSolicitud.actualizarPanel(); break;
+            case "resultados": resultados.actualizarPanel(); break;
+            case "reportes": reportes.actualizarPanel(); break;
+        }
+        cardLayout.show(contenedor, nombre);
+        
+    }
+    
+    public void cargarMasivos(){
+        //clientes
+        //1
+        clienteBO.registrarCliente("Daniela", "López", "Valenzuela", new Date(1998, 4, 12), "Femenino", "O+");
+        //2
+        clienteBO.registrarCliente("Carlos Alberto", "Méndez", "Ibarra", new Date(1987, 3, 11), "Masculino", "A+");
+        //3
+        clienteBO.registrarCliente("Fernanda", "Ruiz", "Cota", new Date(2001, 6, 25), "Femenino", "B");
+        //4
+        clienteBO.registrarCliente("José Manuel", "Navarro", "Acosta", new Date(1993, 9, 18), "Masculino", "AB-");
+        //5
+        clienteBO.registrarCliente("Andrea", "Torres", "Camacho", new Date(2001, 6, 25), "Femenino", "O-");
+        //6
+        clienteBO.registrarCliente("Miguel Ángel", "Salazar", "Duarte", new Date(1985, 7, 7), "Masculino", "A-");
+        //7
+        clienteBO.registrarCliente("Valeria", "Espinoza", "Romero", new Date(2000, 2, 14), "Femenino", "B-");
+        //8
+        clienteBO.registrarCliente("Ricardo", "Beltrán", "Soto", new Date(1991, 12, 21), "Masculino", "AB+");
+        //9
+        clienteBO.registrarCliente("Paola", "Cervantes", "Medina", new Date(1997, 5, 10), "Femenino", "O+");
+        //10
+        clienteBO.registrarCliente("Luis Enrique", "González", "Armenta", new Date(1989, 8, 16), "Masculino", "A+");
+        
+        //doctores
+        //1
+        doctorBO.registrarDoctor("Arturo", "Zamora", "Fuentes", "Masculino", "Cardiología", "8456123");
+        //2
+        doctorBO.registrarDoctor("Alejandra", "Paredes", "León", "Femenino", "Pediatría", "7319458");
+        //3
+        doctorBO.registrarDoctor("Roberto", "Aguilar", "Noriega", "Masculino", "Medicina Interna", "9623147");
+        //4
+        doctorBO.registrarDoctor("Mariana", "Ochoa", "Valdez", "Femenino", "Dermatología", "6841275");
+        //5
+        doctorBO.registrarDoctor("Sergio", "Castro", "Vázquez", "Masculino", "Traumatología", "9035812");
+        //6
+        doctorBO.registrarDoctor("Karla", "Delgado", "Montoya", "Femenino", "Ginecología", "7124960");
+        //7
+        doctorBO.registrarDoctor("Fernando", "Herrera", "Escalante", "Masculino", "Neurología", "8567031");
+        //8
+        doctorBO.registrarDoctor("Patricia", "Ríos", "Mendoza", "Femenino", "Oftalmología", "7942658");
+        //9
+        doctorBO.registrarDoctor("Eduardo", "Luna", "Sandoval", "Masculino", "Radiología", "6384109");
+        //10
+        doctorBO.registrarDoctor("Sofía", "Jiménez", "Tapia", "Femenino", "Endocrinología", "9258714");
+        
+        //muestras
+        //1
+        muestraBO.registrarMuestra("Sangre");
+        //2
+        muestraBO.registrarMuestra("Orina");
+        //3
+        muestraBO.registrarMuestra("Heces fecales");
+        //4
+        muestraBO.registrarMuestra("Saliva");
+        //5
+        muestraBO.registrarMuestra("Esputo (flema)");
+        //6
+        muestraBO.registrarMuestra("Hisopado nasal");
+        //7
+        muestraBO.registrarMuestra("Hisopado faríngeo");
+        //8
+        muestraBO.registrarMuestra("Biopsia de tejido");
+        //9
+        muestraBO.registrarMuestra("Líquido cefalorraquídeo");
+        //10
+        muestraBO.registrarMuestra("Semen");
+        //11
+        muestraBO.registrarMuestra("Cabello");
+        //12
+        muestraBO.registrarMuestra("Uñas");
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setMaximumSize(new java.awt.Dimension(638, 508));
+        setMinimumSize(new java.awt.Dimension(638, 508));
+        setPreferredSize(new java.awt.Dimension(638, 508));
+        setResizable(false);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        pack();
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(frmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(frmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(frmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(frmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new frmMain().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // End of variables declaration//GEN-END:variables
+}

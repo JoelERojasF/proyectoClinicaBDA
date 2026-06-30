@@ -4,6 +4,7 @@
  */
 package com.entidades;
 import jakarta.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 /**
  *
@@ -11,25 +12,29 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "pruebas_laboratorio")
-public class PruebaLaboratorioEntidad {
+public class PruebaLaboratorioEntidad implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_prueba")
     private int idPrueba;
 
-    @Column(name = "fecha_hora_generacion", insertable = false, updatable = false)
-    private Timestamp fechaHoraGeneracion;
+    @Column(name = "fecha_hora_generacion", nullable = false)
+private Timestamp fechaHoraGeneracion;
 
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false)
     private ClienteEntidad cliente;
 
     @ManyToOne
-    @JoinColumn(name = "id_doctor", nullable = false)
+    @JoinColumn(name = "id_doctor")
     private DoctorEntidad doctor;
 
     public PruebaLaboratorioEntidad() {
+    }
+
+    public PruebaLaboratorioEntidad(Timestamp fechaHoraGeneracion) {
+        this.fechaHoraGeneracion = fechaHoraGeneracion;
     }
 
     public int getIdPrueba() {

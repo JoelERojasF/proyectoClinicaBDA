@@ -5,6 +5,8 @@
 package com.negocioclinicabda;
 import com.entidades.RangoEntidad;
 import com.persistenciaclinicabda.RangoDAO;
+import com.persistenciaclinicabda.conexion.ConexionBD;
+import com.persistenciaclinicabda.conexion.IConexionBD;
 /**
  *
  * @author oscar
@@ -12,9 +14,10 @@ import com.persistenciaclinicabda.RangoDAO;
 public class RangoBO {
     
     private RangoDAO rangoDAO;
+    IConexionBD conexion = new ConexionBD();
 
     public RangoBO() {
-        this.rangoDAO = new RangoDAO();
+        this.rangoDAO = new RangoDAO(conexion);
     }
 
     public boolean registrarRango(String sexoAplica, int edadInicial, int edadFinal, double rangoInicial, double rangoFinal, int idParametro) {
@@ -35,9 +38,10 @@ public class RangoBO {
             return false;
         }
     }
+    
     public java.util.List<com.entidades.ParametroEntidad> obtenerListaParametros() {
         try {
-            return new com.persistenciaclinicabda.ParametroDAO().obtenerTodosLosParametros();
+            return new com.persistenciaclinicabda.ParametroDAO(conexion).obtenerTodosLosParametros();
         } catch (Exception e) {
             System.out.println("Error al consultar parámetros: " + e.getMessage());
             return java.util.Collections.emptyList();
